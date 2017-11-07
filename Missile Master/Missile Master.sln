@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Missile_Master", "Missile Master\Missile_Master\Missile_Master.csproj", "{8B24D1BD-D03F-4828-BD1F-6BC372ED78D1}"
+EndProject
+Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "Missile_MasterContent", "Missile Master\Missile_MasterContent\Missile_MasterContent.contentproj", "{3DF47D6A-3A10-48F6-AB0B-445FE0951B1D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8B24D1BD-D03F-4828-BD1F-6BC372ED78D1}.Debug|x86.ActiveCfg = Debug|x86
+		{8B24D1BD-D03F-4828-BD1F-6BC372ED78D1}.Debug|x86.Build.0 = Debug|x86
+		{8B24D1BD-D03F-4828-BD1F-6BC372ED78D1}.Release|x86.ActiveCfg = Release|x86
+		{8B24D1BD-D03F-4828-BD1F-6BC372ED78D1}.Release|x86.Build.0 = Release|x86
+		{3DF47D6A-3A10-48F6-AB0B-445FE0951B1D}.Debug|x86.ActiveCfg = Debug|x86
+		{3DF47D6A-3A10-48F6-AB0B-445FE0951B1D}.Release|x86.ActiveCfg = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
