@@ -30,10 +30,6 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
-=======
-    <Folder Include="Fonts\Roboto\" />
->>>>>>> master
     <Folder Include="Sounds\" />
   </ItemGroup>
   <ItemGroup>
@@ -89,7 +85,6 @@
       <Processor>TextureProcessor</Processor>
     </Compile>
   </ItemGroup>
-<<<<<<< HEAD
   <ItemGroup>
     <Compile Include="Fonts\Roboto\Roboto-Black.ttf">
       <Name>Roboto-Black</Name>
@@ -128,8 +123,6 @@
       <Name>Roboto-ThinItalic</Name>
     </Compile>
   </ItemGroup>
-=======
->>>>>>> master
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
