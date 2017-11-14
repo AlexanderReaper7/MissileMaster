@@ -43,9 +43,12 @@ namespace Missile_Master
 
         #endregion
 
+<<<<<<< HEAD
         #region Fonts
         
         #endregion
+=======
+>>>>>>> master
 
         //gamestates
         enum GameStates
@@ -75,9 +78,24 @@ namespace Missile_Master
             bool dHasBeenReleased = true;
             bool spaceHasBeenReleased = true;
 
+<<<<<<< HEAD
         }
         */
 
+=======
+        /*       
+           public char InGameControlls()
+        {
+            bool wHasBeenReleased = true;
+            bool aHasBeenReleased = true;
+            bool sHasBeenReleased = true;
+            bool dHasBeenReleased = true;
+            bool spaceHasBeenReleased = true;
+
+        }
+        */
+        #endregion
+>>>>>>> master
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -121,9 +139,13 @@ namespace Missile_Master
 
             #endregion
 
+<<<<<<< HEAD
 
             RobotoRegular = Content.Load<SpriteFont>("res/RobotoRegular");
 
+=======
+            // TODO: use this.Content to load your game content here
+>>>>>>> master
         }
 
         /// <summary>
@@ -169,6 +191,16 @@ namespace Missile_Master
                         gameState = GameStates.Credits;
                     }
 
+<<<<<<< HEAD
+=======
+                    int testint = 0;
+
+                    while (testint < 6)
+                    {
+                        Console.WriteLine(MainMenuOptions[testint]);
+                        testint++;
+                    }
+>>>>>>> master
 
                     break;
                 #endregion 
