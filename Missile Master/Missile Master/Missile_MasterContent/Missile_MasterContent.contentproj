@@ -29,6 +29,100 @@
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.AudioImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.VideoImporters, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sounds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\MainMenuBG_4K.png">
+      <Name>MainMenuBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\CreditsBG_4K.png">
+      <Name>CreditsBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\CheatsBG_4K.png">
+      <Name>CheatsBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Textures\CampaignBG_4K.png">
+      <Name>CampaignBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\GameoverBG_4K.png">
+      <Name>GameoverBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\Level1BG_4K.png">
+      <Name>Level1BG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\LevelSelectBG_4K.png">
+      <Name>LevelSelectBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\OptionsBG_4K.png">
+      <Name>OptionsBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="Textures\ShopBG_4k.png">
+      <Name>ShopBG</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Fonts\Roboto\Roboto-Black.ttf">
+      <Name>Roboto-Black</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-BlackItalic.ttf">
+      <Name>Roboto-BlackItalic</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-Bold.ttf">
+      <Name>Roboto-Bold</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-BoldItalic.ttf">
+      <Name>Roboto-BoldItalic</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-Italic.ttf">
+      <Name>Roboto-Italic</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-Light.ttf">
+      <Name>Roboto-Light</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-LightItalic.ttf">
+      <Name>Roboto-LightItalic</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-Medium.ttf">
+      <Name>Roboto-Medium</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-MediumItalic.ttf">
+      <Name>Roboto-MediumItalic</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-Regular.ttf">
+      <Name>RobotoRegular</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-Thin.ttf">
+      <Name>Roboto-Thin</Name>
+    </Compile>
+    <Compile Include="Fonts\Roboto\Roboto-ThinItalic.ttf">
+      <Name>Roboto-ThinItalic</Name>
+    </Compile>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
