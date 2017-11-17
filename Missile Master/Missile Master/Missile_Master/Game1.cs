@@ -65,15 +65,6 @@ namespace Missile_Master
 
         //starting gamestate
         GameStates gameState = GameStates.MainMenu;
-        #endregion
-        /*       
-           public char InGameControlls()
-        {
-            bool wHasBeenReleased = true;
-            bool aHasBeenReleased = true;
-            bool sHasBeenReleased = true;
-            bool dHasBeenReleased = true;
-            bool spaceHasBeenReleased = true;
 
         }
         */
