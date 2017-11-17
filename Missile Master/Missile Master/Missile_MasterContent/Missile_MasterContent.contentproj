@@ -86,41 +86,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Fonts\Roboto\Roboto-Black.ttf">
-      <Name>Roboto-Black</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-BlackItalic.ttf">
-      <Name>Roboto-BlackItalic</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-Bold.ttf">
-      <Name>Roboto-Bold</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-BoldItalic.ttf">
-      <Name>Roboto-BoldItalic</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-Italic.ttf">
-      <Name>Roboto-Italic</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-Light.ttf">
-      <Name>Roboto-Light</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-LightItalic.ttf">
-      <Name>Roboto-LightItalic</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-Medium.ttf">
-      <Name>Roboto-Medium</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-MediumItalic.ttf">
-      <Name>Roboto-MediumItalic</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-Regular.ttf">
-      <Name>RobotoRegular</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-Thin.ttf">
-      <Name>Roboto-Thin</Name>
-    </Compile>
-    <Compile Include="Fonts\Roboto\Roboto-ThinItalic.ttf">
-      <Name>Roboto-ThinItalic</Name>
+    <Compile Include="Fonts\Roboto\RobotoRegular36.spritefont">
+      <Name>RobotoRegular36</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <SubType>Designer</SubType>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

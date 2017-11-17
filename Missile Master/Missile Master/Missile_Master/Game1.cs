@@ -11,9 +11,6 @@ using System.Linq;
 
 namespace Missile_Master
 {
-    /// <summary>
-    /// This is the main type for your game
-    /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         #region Variables
@@ -44,7 +41,7 @@ namespace Missile_Master
         #endregion
 
         #region Fonts
-        
+        SpriteFont RobotoRegular36;
         #endregion
 
         //gamestates
@@ -65,9 +62,7 @@ namespace Missile_Master
 
         //starting gamestate
         GameStates gameState = GameStates.MainMenu;
-
-        }
-        */
+        #endregion
 
         public Game1()
         {
@@ -113,24 +108,15 @@ namespace Missile_Master
             #endregion
 
 
-            RobotoRegular = Content.Load<SpriteFont>("res/RobotoRegular");
+            RobotoRegular36 = Content.Load<SpriteFont>(@"Fonts/Roboto/RobotoRegular36");
 
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// all content.
-        /// </summary>
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
 
@@ -141,7 +127,9 @@ namespace Missile_Master
             //back or End exits the game
             if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.End))
                 this.Exit();
+            #endregion
 
+            #region Fullscreen
             //f to toggle fullscreen
             if (Keyboard.GetState().IsKeyDown(Keys.F))
             {
@@ -256,27 +244,27 @@ namespace Missile_Master
             }
 
         }
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
             spriteBatch.Begin();
             switch (gameState)
             {
+                #region MainMenu
                 case GameStates.MainMenu:
 
-                        spriteBatch.Draw( //Background
-                            MainMenuBG,
-                            new Rectangle(0, 0,
-                            this.Window.ClientBounds.Width,
-                            this.Window.ClientBounds.Height),
-                            Color.White);
+                    spriteBatch.Draw( //Background
+                        MainMenuBG,
+                        new Rectangle(0, 0,
+                        this.Window.ClientBounds.Width,
+                        this.Window.ClientBounds.Height),
+                        Color.White);
                     break;
+                #endregion
 
+
+                #region Credits
                 case GameStates.Credits:
-            
+
                     spriteBatch.Draw( //Background
                         CreditsBG,
                         new Rectangle(0, 0,
@@ -285,7 +273,10 @@ namespace Missile_Master
                         Color.White);
 
                     break;
+                #endregion
 
+
+                #region Cheats
                 case GameStates.Cheats:
 
                     spriteBatch.Draw( //Background
@@ -297,7 +288,10 @@ namespace Missile_Master
 
 
                     break;
+                #endregion
 
+
+                #region Options
                 case GameStates.Options:
 
                     spriteBatch.Draw( //Background
@@ -309,6 +303,7 @@ namespace Missile_Master
 
 
                     break;
+                #endregion
 
                 case GameStates.LevelSelect:
 
