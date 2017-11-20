@@ -1,0 +1,8 @@
+#76ff03 Light Grass, Light green A400
+#64dd17 Meduim grass, Light green A700
+#18ffff light sky, cyan A200
+#bdbdbd light concrete, Grey 400
+#757575 dark concrete, Grey 600
+#ffca28 dark sun, Amber 500
+#ffd740 lightsun, amber A
+#fafafa cloud/White, grey 50
