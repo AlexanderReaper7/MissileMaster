@@ -7,7 +7,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\MainMenuBG.xnb</Output>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\MainMenuBG.xnb</Output>
       <Time>2017-11-17T11:29:33+01:00</Time>
     </Item>
     <Item>
@@ -16,7 +16,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\CreditsBG.xnb</Output>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\CreditsBG.xnb</Output>
       <Time>2017-11-14T14:53:00+01:00</Time>
     </Item>
     <Item>
@@ -25,7 +25,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\CheatsBG.xnb</Output>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\CheatsBG.xnb</Output>
       <Time>2017-11-14T14:52:26+01:00</Time>
     </Item>
     <Item>
@@ -34,7 +34,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\CampaignBG.xnb</Output>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\CampaignBG.xnb</Output>
       <Time>2017-11-14T14:59:24+01:00</Time>
     </Item>
     <Item>
@@ -43,7 +43,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\GameoverBG.xnb</Output>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\GameoverBG.xnb</Output>
       <Time>2017-11-14T15:12:34+01:00</Time>
     </Item>
     <Item>
@@ -52,7 +52,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\Level1BG.xnb</Output>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\Level1BG.xnb</Output>
       <Time>2017-11-14T14:57:59+01:00</Time>
     </Item>
     <Item>
@@ -61,7 +61,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\LevelSelectBG.xnb</Output>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\LevelSelectBG.xnb</Output>
       <Time>2017-11-14T14:57:15+01:00</Time>
     </Item>
     <Item>
@@ -70,7 +70,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\OptionsBG.xnb</Output>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\OptionsBG.xnb</Output>
       <Time>2017-11-14T14:53:43+01:00</Time>
     </Item>
     <Item>
@@ -79,7 +79,7 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\ShopBG.xnb</Output>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\ShopBG.xnb</Output>
       <Time>2017-11-14T14:58:50+01:00</Time>
     </Item>
     <Item>
@@ -88,8 +88,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Fonts\Roboto\RobotoRegular36.xnb</Output>
-      <Time>2017-11-17T11:20:58+01:00</Time>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Fonts\Roboto\RobotoRegular36.xnb</Output>
+      <Time>2017-11-21T14:19:01.9822186+01:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -98,10 +98,10 @@
       <TargetProfile>HiDef</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_MasterContent\</RootDirectory>
-      <LoggerRootDirectory>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\</LoggerRootDirectory>
-      <IntermediateDirectory>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>C:\Users\alexander.oberg4\OneDrive – Academedia\PRRPRR01\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_MasterContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
