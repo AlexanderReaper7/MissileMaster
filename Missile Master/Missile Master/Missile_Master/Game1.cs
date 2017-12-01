@@ -61,6 +61,7 @@ namespace Missile_Master
 
         #region Fonts
         SpriteFont RobotoRegular36;
+        SpriteFont RobotoBold36;
         #endregion
 
         #region Vectors
@@ -158,6 +159,7 @@ namespace Missile_Master
 
 
             RobotoRegular36 = Content.Load<SpriteFont>(@"Fonts/Roboto/RobotoRegular36");
+            RobotoBold36 = Content.Load<SpriteFont>(@"Fonts/Roboto/RobotoBold36");
 
             rocketOrigin.X = RocketTest.Width / 2;
             rocketOrigin.Y = RocketTest.Height / 2;
@@ -197,7 +199,7 @@ namespace Missile_Master
 
                     selectionIndex = 5;
                     InMenuControls();
-                    if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    if (Keyboard.GetState().IsKeyDown(Keys.Enter)) // menu options
                     {
                         switch (selected) {
                             case 0: gameState = GameStates.Campaign;
@@ -544,21 +546,23 @@ namespace Missile_Master
 
         public void InMenuControls()
         {
-            bool KeyIsDown = false;
+            bool KeyIsUp;
 
-            if (Keyboard.GetState().IsKeyUp(Keys.S) && Keyboard.GetState().IsKeyUp(Keys.Down) && Keyboard.GetState().IsKeyUp(Keys.W) && Keyboard.GetState().IsKeyUp(Keys.Up)) { KeyIsDown = false; }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.S) && KeyIsDown == false|| Keyboard.GetState().IsKeyDown(Keys.Down) && KeyIsDown == false)
+            if (Keyboard.GetState().IsKeyUp(Keys.S) && Keyboard.GetState().IsKeyUp(Keys.Down) && Keyboard.GetState().IsKeyUp(Keys.W) && Keyboard.GetState().IsKeyUp(Keys.Up)) { KeyIsUp = true; } // detect if key is up
+            else KeyIsUp = false;
+            if (KeyIsUp)
             {
-                KeyIsDown = true;
-                if (selected < selectionIndex) { selected++; Console.WriteLine(selected); }
-            }
+                if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) //detect if key is down
+                {
+                    KeyIsUp = false;
+                    if (selected < selectionIndex) { selected++; Console.WriteLine(selected); }
+                }
 
-            else if (Keyboard.GetState().IsKeyDown(Keys.W) && KeyIsDown || Keyboard.GetState().IsKeyDown(Keys.Up) && KeyIsDown)
-            {
-                KeyIsDown = true;
-                if (selected > 0 ) { selected--; Console.WriteLine(selected); }
-
+                if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up))
+                {
+                    KeyIsUp = false;
+                    if (selected > 0 ) { selected--; Console.WriteLine(selected); }
+                }
             }
         }
 
@@ -569,13 +573,97 @@ namespace Missile_Master
             {
                 #region MainMenu
                 case GameStates.MainMenu:
-
+                   
                     spriteBatch.Draw( //Background
                         MainMenuBG,
                         new Rectangle(0, 0,
                         this.Window.ClientBounds.Width,
                         this.Window.ClientBounds.Height),
                         Color.White);
+                    //campaign
+                    string campaign = "Campaign";
+                    Vector2 campaingOrigin = RobotoRegular36.MeasureString(campaign) / 2;
+                    Vector2 campaingPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 15);
+                    if (selected == 0)
+                    {
+                        spriteBatch.DrawString(RobotoBold36, campaign, campaingPos, Color.White,
+                                0, campaingOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(RobotoRegular36, campaign, campaingPos, Color.White,
+                                0, campaingOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    //Level select
+                    string levelSelect = "Level Select";
+                    Vector2 levelSelectOrigin = RobotoRegular36.MeasureString(levelSelect) / 2;
+                    Vector2 levelSelectPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 25);
+                    if (selected == 1)
+                    {
+                        spriteBatch.DrawString(RobotoBold36, levelSelect, levelSelectPos, Color.White,
+                                0, levelSelectOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(RobotoRegular36, levelSelect, levelSelectPos, Color.White,
+                                0, levelSelectOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    //shop
+                    string shop = "Campaign";
+                    Vector2 shopOrigin = RobotoRegular36.MeasureString(shop) / 2;
+                    Vector2 shopPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 35);
+                    if (selected == 2)
+                    {
+                        spriteBatch.DrawString(RobotoBold36, shop, shopPos, Color.White,
+                                0, shopOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(RobotoRegular36, shop, shopPos, Color.White,
+                                0, shopOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    //options
+                    string options = "Options";
+                    Vector2 optionsOrigin = RobotoRegular36.MeasureString(options) / 2;
+                    Vector2 optionsPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 45);
+                    if (selected == 3)
+                    {
+                        spriteBatch.DrawString(RobotoBold36, options, optionsPos, Color.White,
+                                0, optionsOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(RobotoRegular36, options, optionsPos, Color.White,
+                                0, optionsOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    //Credits
+                    string credits = "Credits";
+                    Vector2 creditsOrigin = RobotoRegular36.MeasureString(credits) / 2;
+                    Vector2 creditsPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 55);
+                    if (selected == 4)
+                    {
+                        spriteBatch.DrawString(RobotoBold36, credits, creditsPos, Color.White,
+                                0, creditsOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(RobotoRegular36, credits, creditsPos, Color.White,
+                                0, creditsOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    //Exit
+                    string exit = "Exit";
+                    Vector2 exitOrigin = RobotoRegular36.MeasureString(exit) / 2;
+                    Vector2 exitPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 65);
+                    if (selected == 5)
+                    {
+                        spriteBatch.DrawString(RobotoBold36, exit, exitPos, Color.White,
+                                0, exitOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(RobotoRegular36, exit, exitPos, Color.White,
+                                0, exitOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
                     break;
                 #endregion
 

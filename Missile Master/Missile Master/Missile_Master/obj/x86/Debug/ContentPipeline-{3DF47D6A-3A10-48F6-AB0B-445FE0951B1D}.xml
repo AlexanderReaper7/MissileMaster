@@ -100,6 +100,15 @@
       <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\RocketTest.xnb</Output>
       <Time>2017-11-28T13:25:40.3310273+01:00</Time>
     </Item>
+    <Item>
+      <Source>Fonts\Roboto\RobotoBold36.spritefont</Source>
+      <Name>Fonts\Roboto\RobotoBold36</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Fonts\Roboto\RobotoBold36.xnb</Output>
+      <Time>2017-12-01T10:56:57.8060635+01:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{3DF47D6A-3A10-48F6-AB0B-445FE0951B1D}</ContentProjectGUID>
