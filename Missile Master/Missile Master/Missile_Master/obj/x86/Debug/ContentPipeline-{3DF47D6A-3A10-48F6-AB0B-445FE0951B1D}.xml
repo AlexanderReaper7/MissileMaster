@@ -83,15 +83,6 @@
       <Time>2017-11-14T14:58:50+01:00</Time>
     </Item>
     <Item>
-      <Source>Fonts\Roboto\RobotoRegular36.spritefont</Source>
-      <Name>Fonts\Roboto\RobotoRegular36</Name>
-      <Importer>FontDescriptionImporter</Importer>
-      <Processor>FontDescriptionProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Fonts\Roboto\RobotoRegular36.xnb</Output>
-      <Time>2017-11-21T14:19:01.9822186+01:00</Time>
-    </Item>
-    <Item>
       <Source>Textures\RocketTest.png</Source>
       <Name>Textures\RocketTest</Name>
       <Importer>TextureImporter</Importer>
@@ -99,6 +90,15 @@
       <Options>None</Options>
       <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\RocketTest.xnb</Output>
       <Time>2017-11-28T13:25:40.3310273+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Fonts\Roboto\RobotoRegular36.spritefont</Source>
+      <Name>Fonts\Roboto\RobotoRegular36</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Fonts\Roboto\RobotoRegular36.xnb</Output>
+      <Time>2017-11-21T14:19:01.9822186+01:00</Time>
     </Item>
     <Item>
       <Source>Fonts\Roboto\RobotoBold36.spritefont</Source>
@@ -148,7 +148,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\WINDOWS\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2017-08-29T14:29:42.4909674+02:00</Value>
+        <Value>2017-12-01T13:10:02.8653277+01:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>
