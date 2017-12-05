@@ -121,8 +121,8 @@ namespace Missile_Master
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.graphics.PreferredBackBufferWidth = 1920;
-            this.graphics.PreferredBackBufferHeight = 1200;
+            this.graphics.PreferredBackBufferWidth = 1600;
+            this.graphics.PreferredBackBufferHeight = 900;
             this.graphics.ApplyChanges();
             base.Initialize();
         }
@@ -185,6 +185,25 @@ namespace Missile_Master
                 graphics.ApplyChanges();
             }
             #endregion
+
+            float countDuration = 0.3f; // in seconds
+            float currentTime = 0f;
+
+            currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Console.WriteLine(currentTime);
+            if (currentTime >= countDuration)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) //detect if key is down
+                {
+                    if (selected < selectionIndex) { selected++; Console.WriteLine(selected); currentTime -= countDuration; }
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up))
+                {
+                    if (selected > 0) { selected--; Console.WriteLine(selected); currentTime -= countDuration; }
+                }
+            }
 
             switch (gameState)
             {
