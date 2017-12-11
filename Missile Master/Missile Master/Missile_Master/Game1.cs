@@ -19,11 +19,10 @@ namespace Missile_Master
         #region Variables
 
         #region Floats
-        const float defaultTurnRate = 0.6f;
-        const float defaultThrusterPower = 10f;
         float playerRotation = 0.0f;
-        const float circle = 6.28318f;
+        float circle = (float)Math.Round(Math.PI * 2 , 3);
         float gravity = 0.3f;
+        float airResistence = 0.8f;
         #endregion
 
         #region Integers
@@ -65,7 +64,7 @@ namespace Missile_Master
         #region Fonts
         SpriteFont RobotoRegular36;
         SpriteFont RobotoBold36;
-        #endregion
+        #endregion 
 
         #region Vectors
 
@@ -80,7 +79,7 @@ namespace Missile_Master
         #endregion
 
         #region Upgrades
-        float mainThrusterLVL = 4f;
+        float mainThrusterLVL = 20f;
         int bodyLVL = 1;
         float sideThrusterLVL = 1f;
         int payloadLVL = 1;
@@ -120,7 +119,6 @@ namespace Missile_Master
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             this.graphics.PreferredBackBufferWidth = 1600;
             this.graphics.PreferredBackBufferHeight = 900;
             this.graphics.ApplyChanges();
@@ -162,7 +160,6 @@ namespace Missile_Master
 
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
         }
 
         protected override void Update(GameTime gameTime)
@@ -198,17 +195,16 @@ namespace Missile_Master
 
             currentTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            Console.WriteLine(currentTime);
-            if (currentTime >= countDuration)
+            if (currentTime >= countDuration) // ??? TODO : what is this?
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) //detect if key is down
+                if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) 
                 {
-                    if (selected < selectionIndex) { selected++; Console.WriteLine(selected); currentTime -= countDuration; }
+                    if (selected < selectionIndex) { selected++; currentTime -= countDuration; }
                 }
 
                 if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up))
                 {
-                    if (selected > 0) { selected--; Console.WriteLine(selected); currentTime -= countDuration; }
+                    if (selected > 0) { selected--; currentTime -= countDuration; }
                 }
             }
 
@@ -361,44 +357,55 @@ namespace Missile_Master
                     #region Physics
                     float mainThrusterPower = (float)Math.Pow(mainThrusterLVL, 1.5f); //total thruster power
 
-                    playerPosition += playerSpeed;
-                    //TODO add air-resistance
+                    // TODO : add air-resistance
+
                     // gravity
                     playerSpeed.Y += gravity;
+                    playerSpeed.X *= airResistence;
+                    playerSpeed.Y *= airResistence;
 
-                    //used for deciding thrust ratios
-                    float ThrustRatioX;
-                    float ThrustRatioY;
-
-                    // % of circle
-                    ThrustRatioY = playerRotation / circle;
-                    ThrustRatioX = 1 - playerRotation / circle;
-
+                    //used for deciding thrust ratios // TODO : Fix this.
+                    float ThrustRatioX = 1 - playerRotation / circle;
+                    float ThrustRatioY = 1 - playerRotation / circle;
+                    float temp = ThrustRatioY - ThrustRatioX;
+                     if (temp < 0 ) { temp = 0; }
                     //ensure player rotation stays within the limit
-                    if (playerRotation < 0) { playerRotation = circle; }
+                    if (playerRotation < 0) { playerRotation = circle; } // circle = 2pi
                     if (playerRotation > circle) { playerRotation = 0; }
 
                     float rotationRatio = ThrustRatioY;
-                    Console.WriteLine(ThrustRatioX);
-                    Console.WriteLine(ThrustRatioY);
                     #endregion 
 
 
                     #region W key
                     if (Keyboard.GetState().IsKeyDown(Keys.W))
                     {
+                        Console.WriteLine("X " + ThrustRatioX + " Y " + ThrustRatioY + "  " + temp);
                         //accelerate
                         //  -Y +X
-                        if (playerRotation > 0.25 && playerRotation < 0.75) {
+                        if (playerRotation >= 0 && playerRotation < 0.25)
+                        {
                             playerSpeed.Y = mainThrusterPower * ThrustRatioY * -1;
                             playerSpeed.X = mainThrusterPower * ThrustRatioX; 
                         }
-                        
-
-
-
-
-
+                        /*//  +Y +X
+                        if (playerRotation >= 0.25 && playerRotation < 0.5)
+                        {
+                            playerSpeed.Y = mainThrusterPower * ThrustRatioY;
+                            playerSpeed.X = mainThrusterPower * ThrustRatioX;
+                        }
+                        //  +Y -X
+                        if (playerRotation >= 0.5 && playerRotation < 0.75)
+                        {
+                            playerSpeed.Y = mainThrusterPower * ThrustRatioY;
+                            playerSpeed.X = mainThrusterPower * ThrustRatioX * -1;
+                        }
+                        //  -Y -X
+                        if (playerRotation >= 0.75 && playerRotation < 0)
+                        {
+                            playerSpeed.Y = mainThrusterPower * ThrustRatioY * -1;
+                            playerSpeed.X = mainThrusterPower * ThrustRatioX * -1;
+                        } */
                     }
                     #endregion
 
@@ -406,7 +413,7 @@ namespace Missile_Master
                     if (Keyboard.GetState().IsKeyDown(Keys.A))
                     {
                         //rotate counter-clockwise
-                        playerRotation -= 0.01234f;
+                        playerRotation -= 0.01f;
                     }
                     #endregion
 
@@ -422,11 +429,16 @@ namespace Missile_Master
                     if (Keyboard.GetState().IsKeyDown(Keys.D))
                     {
                         //rotate clockwise
-                        playerRotation += 0.01234f;
+                        playerRotation += 0.01f;
 
                     }
                     #endregion
 
+                    /*
+                    Console.WriteLine(" X " + ThrustRatioX + " Y " + ThrustRatioY + " Rotation " + playerRotation); // Console Output
+                    Console.WriteLine(" DeltaX " + playerSpeed.X + " DeltaY " + playerSpeed.Y);
+                    */
+                    playerPosition += playerSpeed;
                     break;
                 #endregion
 
@@ -434,7 +446,7 @@ namespace Missile_Master
                 case GameStates.Shop:
 
 
-
+                    
                     break;
                 #endregion
 
@@ -643,11 +655,12 @@ namespace Missile_Master
 
                     spriteBatch.Draw(RocketTest, //Rocket
                         playerPosition,
+                        // TODO : make hitbox, new Rectangle( playerPosition.X, playerPosition.Y, RocketTest.Height, )
                         null,
                         Color.Black,
                         playerRotation,
                         rocketOrigin,
-                        1.0f,
+                        0.3f,
                         SpriteEffects.None,
                         0f);
                     break;
