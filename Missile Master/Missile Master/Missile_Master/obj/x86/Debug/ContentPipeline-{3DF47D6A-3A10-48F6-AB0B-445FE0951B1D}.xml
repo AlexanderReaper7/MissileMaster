@@ -97,8 +97,8 @@
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Fonts\Roboto\RobotoRegular36.xnb</Output>
-      <Time>2017-11-21T14:19:01.9822186+01:00</Time>
+      <Output>C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Fonts\Roboto\RobotoRegular36.xnb</Output>
+      <Time>2017-12-01T16:35:30.8585382+01:00</Time>
     </Item>
     <Item>
       <Source>Fonts\Roboto\RobotoBold36.spritefont</Source>
@@ -148,7 +148,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\WINDOWS\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2017-12-01T13:10:02.8653277+01:00</Value>
+        <Value>2017-12-02T15:07:27.8313308+01:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

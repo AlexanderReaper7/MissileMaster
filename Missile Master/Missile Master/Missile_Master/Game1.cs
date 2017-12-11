@@ -79,7 +79,7 @@ namespace Missile_Master
         Rectangle playerRectangle = new Rectangle();
         #endregion
 
-        #region UpgradeStates
+        #region Upgrades
         float mainThrusterLVL = 4f;
         int bodyLVL = 1;
         float sideThrusterLVL = 1f;
@@ -171,6 +171,13 @@ namespace Missile_Master
             GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboard = Keyboard.GetState();
 
+            #region to main menu
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Back)) //esc or back to return to Mainmenu
+            {
+                gameState = GameStates.MainMenu;
+            }
+            #endregion
+
             #region Game Exit
             //back or End exits the game
             if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.End))
@@ -254,7 +261,7 @@ namespace Missile_Master
                         gameState = GameStates.Credits;
                     }
 
-                    if (Keyboard.GetState().IsKeyDown(Keys.NumPad1)) //numpad1 to enter Level1
+                    if (Keyboard.GetState().IsKeyDown(Keys.O)) //numpad1 to enter Level1
                     {
                         gameState = GameStates.Level1;
                     }
@@ -265,7 +272,6 @@ namespace Missile_Master
                 #region Credits
                 case GameStates.Credits:
 
-                    ESCtoMainMenu(); //esc or backspace to return to Mainmenu
 
                     if (Keyboard.GetState().IsKeyDown(Keys.Insert)) //insert goes to activatecheats screen
                     {
@@ -332,7 +338,6 @@ namespace Missile_Master
                         cheatsActive = false;
                     }
 
-                    ESCtoMainMenu(); //esc or backspace to return to Mainmenu
 
                     break;
                 #endregion
@@ -340,7 +345,6 @@ namespace Missile_Master
                 #region Options
                 case GameStates.Options:
 
-                    ESCtoMainMenu(); //esc or backspace to return to Mainmenu
 
                     break;
                 #endregion
@@ -348,7 +352,6 @@ namespace Missile_Master
                 #region LevelSelect
                 case GameStates.LevelSelect:
 
-                    ESCtoMainMenu(); //esc or backspace to return to Mainmenu
 
                     break;
                 #endregion
@@ -430,7 +433,6 @@ namespace Missile_Master
                 #region Shop
                 case GameStates.Shop:
 
-                    ESCtoMainMenu(); //esc or backspace to return to Mainmenu
 
 
                     break;
@@ -439,7 +441,6 @@ namespace Missile_Master
                 #region Campaign
                 case GameStates.Campaign:
 
-                    ESCtoMainMenu(); //esc or backspace to return to Mainmenu
 
 
                     break;
@@ -448,7 +449,6 @@ namespace Missile_Master
                 #region Gameover
                 case GameStates.Gameover:
 
-                    ESCtoMainMenu(); //esc or backspace to return to Mainmenu
 
                     break;
                 #endregion
@@ -468,13 +468,6 @@ namespace Missile_Master
             base.Update(gameTime);
         }
 
-        public void ESCtoMainMenu()
-        {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Back)) //esc or back to return to Mainmenu
-            {
-                gameState = GameStates.MainMenu;
-            }
-        }
 
         protected override void Draw(GameTime gameTime)
         {
