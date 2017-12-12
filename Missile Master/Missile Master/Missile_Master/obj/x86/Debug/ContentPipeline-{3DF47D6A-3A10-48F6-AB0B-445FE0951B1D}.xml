@@ -89,7 +89,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\RocketTest.xnb</Output>
-      <Time>2017-11-28T13:25:40.3310273+01:00</Time>
+      <Time>2017-12-12T14:40:44.0039802+01:00</Time>
     </Item>
     <Item>
       <Source>Fonts\Roboto\RobotoRegular36.spritefont</Source>
@@ -108,6 +108,15 @@
       <Options>None</Options>
       <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Fonts\Roboto\RobotoBold36.xnb</Output>
       <Time>2017-12-01T10:56:57.8060635+01:00</Time>
+    </Item>
+    <Item>
+      <Source>Text\Credits.xml</Source>
+      <Name>Text\Credits</Name>
+      <Importer>XmlImporter</Importer>
+      <Processor>PassThroughProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Text\Credits.xnb</Output>
+      <Time>2017-12-12T16:03:08.5746017+01:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
