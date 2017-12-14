@@ -25,7 +25,7 @@ namespace Missile_Master
         float playerAccel;
         float playerAngle;
         float playerMaxSpeed = 10;
-        float playerTrunRate = 0.04f;
+        float playerTurnRate = 0.04f;
         #endregion
 
         #region Integers
@@ -55,13 +55,18 @@ namespace Missile_Master
         #region Booleans
         bool cheatsActive = false; // TODO : Create Cheats
         bool KeyIsUp = false;
-        bool start = true;
+        bool firstRun = true;
+        bool dead = false;
         #endregion
 
         #region Strings
 
         string[] MainMenuOptions = new string[] { "Campaign", "Level Select", "Shop", "Options", "Exit" };
 
+        #endregion
+
+        #region Soundeffects
+        SoundEffect Explosion1;
         #endregion
 
         #region Fonts
@@ -115,7 +120,7 @@ namespace Missile_Master
         };
 
         //starting gamestate
-        GameStates gameState = GameStates.Level1;
+        GameStates gameState = GameStates.MainMenu;
         #endregion 
 
         #endregion
@@ -155,13 +160,16 @@ namespace Missile_Master
 
             #endregion
 
-            /// = Content.Load<Texture2D>(@"Textures/");
-
             #endregion
 
+            #region Soundeffects
+            Explosion1 = Content.Load<SoundEffect>(@"Sounds/Explosion1");
+            #endregion
 
+            #region Fonts
             RobotoRegular36 = Content.Load<SpriteFont>(@"Fonts/Roboto/RobotoRegular36");
             RobotoBold36 = Content.Load<SpriteFont>(@"Fonts/Roboto/RobotoBold36");
+            #endregion
 
             playerOrigin.X = RocketTest.Width / 2;
             playerOrigin.Y = RocketTest.Height / 2;
@@ -172,8 +180,9 @@ namespace Missile_Master
         {
         }
 
-        public void ResetPosition()
+        public void ResetGame()
         {
+            dead = false;
             switch (gameState)
             {
                 case GameStates.Level1:
@@ -209,15 +218,6 @@ namespace Missile_Master
                 graphics.ApplyChanges();
             }
             #endregion
-
-            #region
-            
-
-
-            #endregion
-
-
-
 
             switch (gameState)
             {
@@ -409,64 +409,79 @@ namespace Missile_Master
 
                 #region Level1
                 case GameStates.Level1:
-                    #region Physics
-                    // moves player to starting position, is only ran once per life
-                    if (start == true)
-                    {                       
-                            ResetPosition();                         
-                            start = false;
-                    }
-                    // total thruster power
-                    float mainThrusterPower = (float)Math.Pow(mainThrusterLVL, 1.5f); 
-                    // Gravity
-                    playerPos.Y += gravity;
-                    // Air resistence 
-                    if(playerAccel >= airResistence) playerAccel -= airResistence;
+                    if(!dead)
+                    {
 
-                    // Direction determination
-                    playerDirection = new Vector2((float)Math.Cos(playerAngle), (float)Math.Sin(playerAngle));
-
-                    #endregion 
                     
-                    #region W key
-                    if (Keyboard.GetState().IsKeyDown(Keys.W))
-                    {
-                        // Accelerate
-                        playerAccel += mainThrusterPower;
-                        // Speedlimit
-                        if (playerAccel > playerMaxSpeed) 
-                        {
-                            playerAccel = playerMaxSpeed;
+                        #region Physics
+                        // TODO : make momentum last longer
+                        // moves player to starting position, is only ran once per life
+                        if (firstRun)
+                        {                       
+                            ResetGame();                         
+                            firstRun = false;
                         }
-                    }
-                    #endregion
+                        // total thruster power
+                        float mainThrusterPower = (float)Math.Pow(mainThrusterLVL, 1.5f); 
+                        // Gravity
+                        playerPos.Y += gravity;
+                        // Air resistence 
+                        if(playerAccel >= airResistence) playerAccel -= airResistence;
+                        // Direction determination
+                        playerDirection = new Vector2((float)Math.Cos(playerAngle), (float)Math.Sin(playerAngle));
 
-                    #region A key
-                    if (Keyboard.GetState().IsKeyDown(Keys.A))
-                    {
-                        //rotate counter-clockwise
-                        playerAngle -= playerTrunRate;
-                    }
-                    #endregion
+                        #endregion 
+                    
+                        #region W key
+                        if (Keyboard.GetState().IsKeyDown(Keys.W))
+                        {
+                            // Accelerate
+                            playerAccel += mainThrusterPower;
+                            // Speedlimit
+                            if (playerAccel > playerMaxSpeed) 
+                            {
+                                playerAccel = playerMaxSpeed;
+                            }
+                        }
+                        #endregion
 
-                    #region S key
-                    if (Keyboard.GetState().IsKeyDown(Keys.S))
-                    {
-                        //decelerate
-                        playerAccel *= 0.9f;
-                    }
-                    #endregion
+                        #region A key
+                        if (Keyboard.GetState().IsKeyDown(Keys.A))
+                        {
+                            //rotate counter-clockwise
+                            playerAngle -= playerTurnRate;
+                        }
+                        #endregion
 
-                    #region D key
-                    if (Keyboard.GetState().IsKeyDown(Keys.D))
-                    {
-                        //rotate clockwise
-                        playerAngle += playerTrunRate;
-                    }
-                        // Update Player Position
-                        playerPos += playerDirection * playerAccel;
+                        #region S key
+                        if (Keyboard.GetState().IsKeyDown(Keys.S))
+                        {
+                            //decelerate
+                            playerAccel *= 0.9f;
+                        }
+                        #endregion
 
-                    #endregion
+                        #region D key
+                        if (Keyboard.GetState().IsKeyDown(Keys.D))
+                        {
+                            //rotate clockwise
+                            playerAngle += playerTurnRate;
+                        }
+                            // Update Player Position
+                            playerPos += playerDirection * playerAccel;
+
+                        #endregion
+
+                        #region Space Key
+                        if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                        {
+                            dead = true;
+                            Explosion1.Play();
+                            gameState = GameStates.Gameover;
+                        }
+
+                            #endregion
+                    }
                     break;
                 #endregion
 
@@ -488,7 +503,7 @@ namespace Missile_Master
 
                 #region Gameover
                 case GameStates.Gameover:
-                    start = true;
+                    firstRun = true;
 
                     break;
                 #endregion
@@ -717,8 +732,10 @@ namespace Missile_Master
 
 
                     break;
-                    #endregion
-                #endregion  
+                #endregion
+                #endregion
+
+                #region Shop
                 case GameStates.Shop:
 
                     spriteBatch.Draw( //Background
@@ -727,10 +744,10 @@ namespace Missile_Master
                         this.Window.ClientBounds.Width,
                         this.Window.ClientBounds.Height),
                         Color.White);
-
-
                     break;
+                #endregion
 
+                #region Campaign
                 case GameStates.Campaign:
 
                     spriteBatch.Draw( //Background
@@ -739,10 +756,10 @@ namespace Missile_Master
                         this.Window.ClientBounds.Width,
                         this.Window.ClientBounds.Height),
                         Color.White);
-
-
                     break;
+                #endregion
 
+                #region Gameover
                 case GameStates.Gameover:
 
                     spriteBatch.Draw( //Background
@@ -751,9 +768,8 @@ namespace Missile_Master
                         this.Window.ClientBounds.Width,
                         this.Window.ClientBounds.Height),
                         Color.White);
-
-
                     break;
+                    #endregion
             }
 
             spriteBatch.End();

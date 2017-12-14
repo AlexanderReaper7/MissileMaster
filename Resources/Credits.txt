@@ -1,2 +1,4 @@
 Roboto Font	Google Fonts
 Development 	Alexander Öberg
+Sound Effects : 
+Explosion1 : by Jobro, creative commons 4.0, https://freesound.org/people/jobro/sounds/86252/

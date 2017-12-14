@@ -81,3 +81,5 @@ C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Mi
 C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Missile_Master\obj\x86\Debug\Missile_Master.csprojResolveAssemblyReference.cache
 C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Missile_Master\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Text\Credits.xnb
+C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Text\Credits.xnb
+C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Sounds\Explosion1.xnb
