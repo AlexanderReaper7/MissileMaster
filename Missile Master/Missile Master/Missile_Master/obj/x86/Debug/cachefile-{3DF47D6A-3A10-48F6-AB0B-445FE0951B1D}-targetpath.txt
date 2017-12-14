@@ -12,3 +12,5 @@ Content\Fonts\Roboto\RobotoRegular36.xnb
 Content\Fonts\Roboto\RobotoBold36.xnb
 Content\Text\Credits.xnb
 Content\Sounds\Explosion1.xnb
+Content\Textures\Building1.xnb
+Content\Textures\Explosion1.xnb

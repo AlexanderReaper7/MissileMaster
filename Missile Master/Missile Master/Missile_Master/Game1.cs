@@ -18,21 +18,31 @@ namespace Missile_Master
 
         #region Variables
 
-        #region Floats
-        float gravity = 1.2f;
-        float gravityMomentum; // TODO : make gravity accelerate
-        float airResistence = 0.2f;
+        #region Player
+        Texture2D PlayerTexture;
         float playerAccel;
         float playerAngle;
         float playerMaxSpeed = 10;
         float playerTurnRate = 0.04f;
+        Vector2 playerOrigin;
+        Vector2 playerPos;
+        Vector2 playerDirection;
+        bool playerDead = false;
+        Rectangle playerRect;
+        #endregion
+
+        #region Floats
+        float gravity = 1.2f;
+        float gravityMomentum; // TODO : make gravity accelerate
+        float airResistence = 0.2f;
+        float windowMaxX;
+        float windowMaxY;
+        float mainThrusterPower;
         #endregion
 
         #region Integers
         int selectionIndex;
-
         int selected = 0;
-
         #endregion
 
         #region 2DTextures
@@ -45,9 +55,12 @@ namespace Missile_Master
         Texture2D CampaignBG;
         Texture2D GameoverBG;
 
+        Texture2D Explosion1Tex;
+
         #region Level1
         Texture2D Level1BG;
-        Texture2D RocketTest;
+        Texture2D Building1;
+        Rectangle building1Rect;
         #endregion
 
         #endregion
@@ -56,7 +69,7 @@ namespace Missile_Master
         bool cheatsActive = false; // TODO : Create Cheats
         bool KeyIsUp = false;
         bool firstRun = true;
-        bool dead = false;
+        bool building1Dead;
         #endregion
 
         #region Strings
@@ -66,7 +79,7 @@ namespace Missile_Master
         #endregion
 
         #region Soundeffects
-        SoundEffect Explosion1;
+        SoundEffect Explosion1Sound;
         #endregion
 
         #region Fonts
@@ -75,14 +88,11 @@ namespace Missile_Master
         #endregion 
 
         #region Vectors
-
-        Vector2 playerOrigin;
-        Vector2 playerPos;
-        Vector2 playerDirection;
-
+        Vector2 explosion1Origin;
         #endregion
 
         #region Rectangles
+        Rectangle explosion1Rect;
         #endregion
 
         #region Upgrades
@@ -96,7 +106,6 @@ namespace Missile_Master
         #endregion
 
         // EXPERIMENTAL
-
 
         // ------------
 
@@ -120,7 +129,7 @@ namespace Missile_Master
         };
 
         //starting gamestate
-        GameStates gameState = GameStates.MainMenu;
+        GameStates gameState = GameStates.Level1;
         #endregion 
 
         #endregion
@@ -134,9 +143,9 @@ namespace Missile_Master
         protected override void Initialize()
         {
             // TODO : Create a setting in-game for resulution
-            this.graphics.PreferredBackBufferWidth = 1600;
-            this.graphics.PreferredBackBufferHeight = 900;
-            this.graphics.ApplyChanges();
+            graphics.PreferredBackBufferWidth = 1600;
+            graphics.PreferredBackBufferHeight = 900;
+            graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -153,17 +162,18 @@ namespace Missile_Master
             ShopBG = Content.Load<Texture2D>(@"Textures/ShopBG");
             CampaignBG = Content.Load<Texture2D>(@"Textures/CampaignBG");
             GameoverBG = Content.Load<Texture2D>(@"Textures/GameoverBG");
-
+            Explosion1Tex = Content.Load<Texture2D>(@"Textures/Explosion1");
             #region Level1
             Level1BG = Content.Load<Texture2D>(@"Textures/Level1BG");
-            RocketTest = Content.Load<Texture2D>(@"Textures/RocketTest");
-
+            PlayerTexture = Content.Load<Texture2D>(@"Textures/RocketTest");
+            Building1 = Content.Load<Texture2D>(@"Textures/Building1");
             #endregion
 
             #endregion
+
 
             #region Soundeffects
-            Explosion1 = Content.Load<SoundEffect>(@"Sounds/Explosion1");
+            Explosion1Sound = Content.Load<SoundEffect>(@"Sounds/Explosion1");
             #endregion
 
             #region Fonts
@@ -171,8 +181,14 @@ namespace Missile_Master
             RobotoBold36 = Content.Load<SpriteFont>(@"Fonts/Roboto/RobotoBold36");
             #endregion
 
-            playerOrigin.X = RocketTest.Width / 2;
-            playerOrigin.Y = RocketTest.Height / 2;
+            windowMaxX = graphics.GraphicsDevice.Viewport.Width;
+            windowMaxY = graphics.GraphicsDevice.Viewport.Height;
+            playerOrigin.X = PlayerTexture.Width / 2;
+            playerOrigin.Y = PlayerTexture.Height / 2;
+            explosion1Origin.X = Explosion1Tex.Width / 2;
+            explosion1Origin.Y = Explosion1Tex.Height / 2;
+
+            playerRect = new Rectangle((int)playerPos.X, (int)playerPos.Y, PlayerTexture.Width, PlayerTexture.Height);
 
         }
 
@@ -182,7 +198,6 @@ namespace Missile_Master
 
         public void ResetGame()
         {
-            dead = false;
             switch (gameState)
             {
                 case GameStates.Level1:
@@ -190,6 +205,23 @@ namespace Missile_Master
                     playerPos.Y = this.Window.ClientBounds.Height - 60;
                     break;
             }
+            playerAccel = 0;
+            playerAngle = 0;
+            building1Dead = false;
+            playerDead = false;
+        }
+
+        public void PlayerExplode()
+        {
+            playerDead = true;
+            explosion1Rect = new Rectangle((int)playerPos.X, (int)playerPos.Y, 100, 100);
+            if (explosion1Rect.Intersects(building1Rect))
+            {
+                building1Dead = true;
+                Console.WriteLine("Building 1 Dead");
+            }
+            Explosion1Sound.Play();
+            //gameState = GameStates.Gameover; 
         }
         protected override void Update(GameTime gameTime)
         {
@@ -409,29 +441,43 @@ namespace Missile_Master
 
                 #region Level1
                 case GameStates.Level1:
-                    if(!dead)
+                    if(!playerDead)
                     {
 
-                    
+                        #region Objects
+                        #endregion
+
                         #region Physics
                         // TODO : make momentum last longer
-                        // moves player to starting position, is only ran once per life
                         if (firstRun)
-                        {                       
+                        {
+                            building1Rect = new Rectangle(
+                               (int)windowMaxX - Building1.Width - Convert.ToInt32(Building1.Height * 0.2f),
+                               (int)windowMaxY - Building1.Height - Convert.ToInt32(Building1.Height * 0.3f),
+                               Building1.Width,
+                               Building1.Height
+                           );
+                            // total thruster power
+                            mainThrusterPower = (float)Math.Pow(mainThrusterLVL, 1.5f); 
                             ResetGame();                         
                             firstRun = false;
                         }
-                        // total thruster power
-                        float mainThrusterPower = (float)Math.Pow(mainThrusterLVL, 1.5f); 
+
                         // Gravity
                         playerPos.Y += gravity;
                         // Air resistence 
                         if(playerAccel >= airResistence) playerAccel -= airResistence;
-                        // Direction determination
+                        // Direction
                         playerDirection = new Vector2((float)Math.Cos(playerAngle), (float)Math.Sin(playerAngle));
 
-                        #endregion 
-                    
+                        if (building1Rect.Contains(playerRect))
+                        {
+                            PlayerExplode(); // TODO : COntinue here
+                            Console.WriteLine("boom");
+                        }
+
+                        #endregion
+
                         #region W key
                         if (Keyboard.GetState().IsKeyDown(Keys.W))
                         {
@@ -475,14 +521,19 @@ namespace Missile_Master
                         #region Space Key
                         if (Keyboard.GetState().IsKeyDown(Keys.Space))
                         {
-                            dead = true;
-                            Explosion1.Play();
-                            gameState = GameStates.Gameover;
+                            PlayerExplode();
                         }
 
-                            #endregion
+                        #endregion
+
                     }
-                    break;
+                         #region R Key
+                        if (Keyboard.GetState().IsKeyDown(Keys.R))
+                        {
+                            ResetGame();
+                        }
+                        #endregion
+                   break;
                 #endregion
 
                 #region Shop
@@ -526,6 +577,12 @@ namespace Missile_Master
 
         protected override void Draw(GameTime gameTime)
         {
+
+
+
+
+
+
             spriteBatch.Begin();
             switch (gameState)
             {
@@ -707,32 +764,60 @@ namespace Missile_Master
 
                 #region Levels
                     #region Level 1
-                case GameStates.Level1:
+                    case GameStates.Level1:
 
-                    spriteBatch.Draw // Background
-                        ( 
-                        Level1BG,
-                        new Rectangle(0, 0,
-                        this.Window.ClientBounds.Width,
-                        this.Window.ClientBounds.Height),
-                        Color.White
-                        );
+                        spriteBatch.Draw // Background
+                            ( 
+                            Level1BG,
+                            new Rectangle(0, 0,
+                            this.Window.ClientBounds.Width,
+                            this.Window.ClientBounds.Height),
+                            Color.White
+                            );
 
-                    spriteBatch.Draw // Player
-                        (
-                        RocketTest,
-                        new Rectangle((int)playerPos.X, (int)playerPos.Y, (int)RocketTest.Width, (int)RocketTest.Height), //Destination Rectangle
-                        null,
-                        Color.Black,
-                        playerAngle,
-                        playerOrigin,
-                        SpriteEffects.None,
-                        0f
-                        );
+                        spriteBatch.Draw // Building 1
+                            (
+                            Building1,
+                            building1Rect,
+                            null,
+                            Color.White,
+                            0f,
+                            new Vector2(0, 0),
+                            SpriteEffects.None,
+                            0.5f
+                            );
+                    if(!playerDead)
+                    {
 
 
-                    break;
-                #endregion
+                        spriteBatch.Draw // Player
+                            (
+                            PlayerTexture,
+                            new Rectangle((int)playerPos.X, (int)playerPos.Y, (int)PlayerTexture.Width, (int)PlayerTexture.Height), 
+                            null,
+                            Color.White,
+                            playerAngle,
+                            playerOrigin,
+                            SpriteEffects.None,
+                            1f
+                            );
+                    }
+                    else
+                    {
+                        spriteBatch.Draw // Explosion
+                            (
+                            Explosion1Tex,
+                            explosion1Rect,
+                            null,
+                            Color.White,
+                            0f,
+                            explosion1Origin,
+                            SpriteEffects.None,
+                            1f
+                            );
+                    }
+                        break;
+                    #endregion
                 #endregion
 
                 #region Shop
