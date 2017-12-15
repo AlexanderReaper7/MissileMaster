@@ -91,3 +91,4 @@ C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Mi
 C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\coin1.xnb
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\coin1.xnb
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Sounds\Coin1.xnb
+C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Sounds\Coin1.xnb

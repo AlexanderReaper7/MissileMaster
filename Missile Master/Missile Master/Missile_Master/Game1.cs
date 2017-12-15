@@ -48,7 +48,7 @@ namespace Missile_Master
         int selected = 0;
         long money = 0; // it is 64bit to ensure player can have a lot of money
         const int coin1Size = 24;
-        const int defaultfuel = 10000;
+        const int defaultfuel = 3000;
 
         #endregion
 
@@ -90,10 +90,10 @@ namespace Missile_Master
         #endregion
 
         #region Strings
-
-        // TODO : string[] MainMenuOptions = new string[] { "Campaign", "Level Select", "Shop", "Options", "Exit" };
+        string[] mainMenuStrArr = new string[6] { "Campaign", "Level Select", "Shop", "Options", "Credits", "Exit" };
         string moneyStr;
         string fuelStr;
+
         #endregion
 
         #region Soundeffects
@@ -221,9 +221,14 @@ namespace Missile_Master
             playerOrigin.Y = PlayerTexture.Height / 2;
             explosion1Origin.X = Explosion1Tex.Width / 2;
             explosion1Origin.Y = Explosion1Tex.Height / 2;
+
+            Console.WriteLine(mainMenuStrArr[1]);
             windowMaxYRect = new Rectangle(0, (int)windowMaxY - 1, (int)windowMaxX, 1);
             
         }
+
+
+
 
         protected override void UnloadContent()
         {
@@ -533,7 +538,7 @@ namespace Missile_Master
                         }
 
                         // Collision with the ground
-                        if (playerRect.Intersects(windowMaxYRect))
+                        if (playerPos.Y > windowMaxY - 16)
                         {
                             PlayerExplode();
                         }
@@ -707,77 +712,72 @@ namespace Missile_Master
                         Color.White);
 
                     //campaign
-                    string campaign = "Campaign";
-                    Vector2 campaingOrigin = RobotoRegular36.MeasureString(campaign) / 2;
+                    Vector2 campaingOrigin = RobotoRegular36.MeasureString(mainMenuStrArr[0]) / 2;
                     Vector2 campaingPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 15);
                     if (selected == 0)
                     {
-                        spriteBatch.DrawString(RobotoBold36, campaign, campaingPos, Color.White,
+                        spriteBatch.DrawString(RobotoBold36, mainMenuStrArr[0], campaingPos, Color.White,
                                 0, campaingOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
                     else
                     {
-                        spriteBatch.DrawString(RobotoRegular36, campaign, campaingPos, Color.White,
+                        spriteBatch.DrawString(RobotoRegular36, mainMenuStrArr[0], campaingPos, Color.White,
                                 0, campaingOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
 
                     //Level select
-                    string levelSelect = "Level Select";
-                    Vector2 levelSelectOrigin = RobotoRegular36.MeasureString(levelSelect) / 2;
+                    Vector2 levelSelectOrigin = RobotoRegular36.MeasureString(mainMenuStrArr[1]) / 2;
                     Vector2 levelSelectPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 25);
                     if (selected == 1)
                     {
-                        spriteBatch.DrawString(RobotoBold36, levelSelect, levelSelectPos, Color.White,
+                        spriteBatch.DrawString(RobotoBold36, mainMenuStrArr[1], levelSelectPos, Color.White,
                                 0, levelSelectOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
                     else
                     {
-                        spriteBatch.DrawString(RobotoRegular36, levelSelect, levelSelectPos, Color.White,
+                        spriteBatch.DrawString(RobotoRegular36, mainMenuStrArr[1], levelSelectPos, Color.White,
                                 0, levelSelectOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
 
                     //shop
-                    string shop = "Shop";
-                    Vector2 shopOrigin = RobotoRegular36.MeasureString(shop) / 2;
+                    Vector2 shopOrigin = RobotoRegular36.MeasureString(mainMenuStrArr[2]) / 2;
                     Vector2 shopPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 35);
                     if (selected == 2)
                     {
-                        spriteBatch.DrawString(RobotoBold36, shop, shopPos, Color.White,
+                        spriteBatch.DrawString(RobotoBold36, mainMenuStrArr[2], shopPos, Color.White,
                                 0, shopOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
                     else
                     {
-                        spriteBatch.DrawString(RobotoRegular36, shop, shopPos, Color.White,
+                        spriteBatch.DrawString(RobotoRegular36, mainMenuStrArr[2], shopPos, Color.White,
                                 0, shopOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
 
                     //options
-                    string options = "Options";
-                    Vector2 optionsOrigin = RobotoRegular36.MeasureString(options) / 2;
+                    Vector2 optionsOrigin = RobotoRegular36.MeasureString(mainMenuStrArr[3]) / 2;
                     Vector2 optionsPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 45);
                     if (selected == 3)
                     {
-                        spriteBatch.DrawString(RobotoBold36, options, optionsPos, Color.White,
+                        spriteBatch.DrawString(RobotoBold36, mainMenuStrArr[3], optionsPos, Color.White,
                                 0, optionsOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
                     else
                     {
-                        spriteBatch.DrawString(RobotoRegular36, options, optionsPos, Color.White,
+                        spriteBatch.DrawString(RobotoRegular36, mainMenuStrArr[3], optionsPos, Color.White,
                                 0, optionsOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
 
                     //Credits
-                    string credits = "Credits";
-                    Vector2 creditsOrigin = RobotoRegular36.MeasureString(credits) / 2;
+                    Vector2 creditsOrigin = RobotoRegular36.MeasureString(mainMenuStrArr[4]) / 2;
                     Vector2 creditsPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 55);
                     if (selected == 4)
                     {
-                        spriteBatch.DrawString(RobotoBold36, credits, creditsPos, Color.White,
+                        spriteBatch.DrawString(RobotoBold36, mainMenuStrArr[4], creditsPos, Color.White,
                                 0, creditsOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
                     else
                     {
-                        spriteBatch.DrawString(RobotoRegular36, credits, creditsPos, Color.White,
+                        spriteBatch.DrawString(RobotoRegular36, mainMenuStrArr[4], creditsPos, Color.White,
                                 0, creditsOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
 
@@ -873,9 +873,10 @@ namespace Missile_Master
                         new Vector2(0, 0),
                         Color.White
                         );
-                    if(fuel > 0)
+                    // Fuel in diffrent colors 
+                    if(fuel > totalFuel / 5)
                     {
-                    spriteBatch.DrawString // Fuel
+                    spriteBatch.DrawString 
                         (
                         RobotoRegular36,
                         fuelStr,
@@ -883,7 +884,7 @@ namespace Missile_Master
                         Color.White
                         );
                     }
-                    else if (fuel < totalFuel / 5)
+                    else if (fuel <= totalFuel / 5)
                     {
                         spriteBatch.DrawString // Fuel
                             (
