@@ -32,8 +32,8 @@ namespace Missile_Master
         #endregion
 
         #region Floats
-        float gravity = 1.2f;
-        float gravityMomentum; // TODO : make gravity accelerate
+        float gravity = 0.1f;
+        float gravityMomentum; 
         float airResistence = 0.2f;
         float windowMaxX;
         float windowMaxY;
@@ -43,6 +43,8 @@ namespace Missile_Master
         #region Integers
         int selectionIndex;
         int selected = 0;
+        long money = 0; // it is 64bit to ensure player can have a lot of money
+        const int coin1Size = 24;
         #endregion
 
         #region 2DTextures
@@ -54,9 +56,8 @@ namespace Missile_Master
         Texture2D ShopBG;
         Texture2D CampaignBG;
         Texture2D GameoverBG;
-
         Texture2D Explosion1Tex;
-
+        Texture2D Coin1;
         #region Level1
         Texture2D Level1BG;
         Texture2D Building1;
@@ -70,6 +71,17 @@ namespace Missile_Master
         bool KeyIsUp = false;
         bool firstRun = true;
         bool building1Dead;
+        bool coin1IsActive_0;
+        bool coin1IsActive_1;
+        bool coin1IsActive_2;
+        bool coin1IsActive_3;
+        bool coin1IsActive_4;
+        bool coin1IsActive_5;
+        bool coin1IsActive_6;
+        bool coin1IsActive_7;
+        bool coin1IsActive_8;
+        bool coin1IsActive_9;
+
         #endregion
 
         #region Strings
@@ -93,6 +105,18 @@ namespace Missile_Master
 
         #region Rectangles
         Rectangle explosion1Rect;
+        Rectangle coin1Rect_0;
+        Rectangle coin1Rect_1;
+        Rectangle coin1Rect_2;
+        Rectangle coin1Rect_3;
+        Rectangle coin1Rect_4;
+        Rectangle coin1Rect_5;
+        Rectangle coin1Rect_6;
+        Rectangle coin1Rect_7;
+        Rectangle coin1Rect_8;
+        Rectangle coin1Rect_9;
+
+
         #endregion
 
         #region Upgrades
@@ -163,6 +187,7 @@ namespace Missile_Master
             CampaignBG = Content.Load<Texture2D>(@"Textures/CampaignBG");
             GameoverBG = Content.Load<Texture2D>(@"Textures/GameoverBG");
             Explosion1Tex = Content.Load<Texture2D>(@"Textures/Explosion1");
+            Coin1 = Content.Load<Texture2D>(@"Textures/Coin1");
             #region Level1
             Level1BG = Content.Load<Texture2D>(@"Textures/Level1BG");
             PlayerTexture = Content.Load<Texture2D>(@"Textures/RocketTest");
@@ -189,7 +214,7 @@ namespace Missile_Master
             explosion1Origin.Y = Explosion1Tex.Height / 2;
 
             playerRect = new Rectangle((int)playerPos.X, (int)playerPos.Y, PlayerTexture.Width, PlayerTexture.Height);
-
+            
         }
 
         protected override void UnloadContent()
@@ -198,15 +223,22 @@ namespace Missile_Master
 
         public void ResetGame()
         {
-            switch (gameState)
+            switch (gameState) // Starting positions
             {
                 case GameStates.Level1:
-                    playerPos.X = 20;
-                    playerPos.Y = this.Window.ClientBounds.Height - 60;
+                    playerPos.X = 40;
+                    playerPos.Y = this.Window.ClientBounds.Height - 120;
                     break;
             }
             playerAccel = 0;
-            playerAngle = 0;
+            playerAngle = 4.71f;
+            gravityMomentum = 0;
+            coin1IsActive_0 = true;
+            coin1IsActive_1 = true;
+            coin1IsActive_2 = true;
+            coin1IsActive_3 = true;
+            coin1IsActive_4 = true;
+            coin1IsActive_5 = true;
             building1Dead = false;
             playerDead = false;
         }
@@ -223,6 +255,25 @@ namespace Missile_Master
             Explosion1Sound.Play();
             //gameState = GameStates.Gameover; 
         }
+
+        public void CoinIntersection()
+        {
+
+            coin1Rect_0 = new Rectangle(40, (int)windowMaxY - 240, coin1Size, coin1Size);
+            coin1Rect_1 = new Rectangle(40, 240, coin1Size, coin1Size);
+            coin1Rect_2 = new Rectangle(240, 240, coin1Size, coin1Size);
+            coin1Rect_3 = new Rectangle(360, 240, coin1Size, coin1Size);
+            coin1Rect_4 = new Rectangle((int)windowMaxX / 2, (int)windowMaxY / 2, coin1Size, coin1Size);
+            coin1Rect_5 = new Rectangle((int)windowMaxX - 480, (int)windowMaxY - 240, coin1Size, coin1Size);
+
+            if (coin1Rect_0.Intersects(playerRect) && coin1IsActive_0) { coin1IsActive_0 = false; money++; }
+            if (playerRect.Intersects(coin1Rect_1) && coin1IsActive_1) { coin1IsActive_1 = false; money++; }
+            if (playerRect.Intersects(coin1Rect_2) && coin1IsActive_2) { coin1IsActive_2 = false; money++; }
+            if (playerRect.Intersects(coin1Rect_3) && coin1IsActive_3) { coin1IsActive_3 = false; money++; }
+            if (playerRect.Intersects(coin1Rect_4) && coin1IsActive_4) { coin1IsActive_4 = false; money++; }
+            if (playerRect.Intersects(coin1Rect_5) && coin1IsActive_5) { coin1IsActive_5 = false; money++; }
+        }
+
         protected override void Update(GameTime gameTime)
         {
 
@@ -443,44 +494,52 @@ namespace Missile_Master
                 case GameStates.Level1:
                     if(!playerDead)
                     {
-
-                        #region Objects
-                        #endregion
-
                         #region Physics
                         // TODO : make momentum last longer
                         if (firstRun)
                         {
-                            building1Rect = new Rectangle(
+                            building1Rect = new Rectangle( 
                                (int)windowMaxX - Building1.Width - Convert.ToInt32(Building1.Height * 0.2f),
                                (int)windowMaxY - Building1.Height - Convert.ToInt32(Building1.Height * 0.3f),
                                Building1.Width,
                                Building1.Height
                            );
+
+
                             // total thruster power
                             mainThrusterPower = (float)Math.Pow(mainThrusterLVL, 1.5f); 
-                            ResetGame();                         
+                            ResetGame();
                             firstRun = false;
                         }
 
                         // Gravity
-                        playerPos.Y += gravity;
+                        gravityMomentum += gravity;
+                        playerPos.Y += gravityMomentum;
                         // Air resistence 
                         if(playerAccel >= airResistence) playerAccel -= airResistence;
                         // Direction
                         playerDirection = new Vector2((float)Math.Cos(playerAngle), (float)Math.Sin(playerAngle));
 
-                        if (building1Rect.Contains(playerRect))
+                        if (building1Rect.Intersects(playerRect))
                         {
-                            PlayerExplode(); // TODO : COntinue here
+                            PlayerExplode(); // TODO : fix collision
                             Console.WriteLine("boom");
                         }
+
+                        #endregion
+
+                        #region Objects
+                        // TODO : add coin sound
+                        CoinIntersection();
+
 
                         #endregion
 
                         #region W key
                         if (Keyboard.GetState().IsKeyDown(Keys.W))
                         {
+                            //reduce gravity momentum
+                            gravityMomentum *= 0.9f;
                             // Accelerate
                             playerAccel += mainThrusterPower;
                             // Speedlimit
@@ -577,12 +636,6 @@ namespace Missile_Master
 
         protected override void Draw(GameTime gameTime)
         {
-
-
-
-
-
-
             spriteBatch.Begin();
             switch (gameState)
             {
@@ -704,7 +757,6 @@ namespace Missile_Master
                     break;
                 #endregion
 
-
                 #region Credits
                 case GameStates.Credits:
 
@@ -717,7 +769,6 @@ namespace Missile_Master
 
                     break;
                 #endregion
-
 
                 #region Cheats
                 case GameStates.Cheats:
@@ -732,7 +783,6 @@ namespace Missile_Master
 
                     break;
                 #endregion
-
 
                 #region Options
                 case GameStates.Options:
@@ -816,7 +866,14 @@ namespace Missile_Master
                             1f
                             );
                     }
-                        break;
+                    if (coin1IsActive_0) spriteBatch.Draw(Coin1, coin1Rect_0, Color.White);
+                    if (coin1IsActive_1) spriteBatch.Draw(Coin1, coin1Rect_1, Color.White);
+                    if (coin1IsActive_2) spriteBatch.Draw(Coin1, coin1Rect_2, Color.White);
+                    if (coin1IsActive_3) spriteBatch.Draw(Coin1, coin1Rect_3, Color.White);
+                    if (coin1IsActive_4) spriteBatch.Draw(Coin1, coin1Rect_4, Color.White);
+                    if (coin1IsActive_5) spriteBatch.Draw(Coin1, coin1Rect_5, Color.White);
+
+                    break;
                     #endregion
                 #endregion
 
