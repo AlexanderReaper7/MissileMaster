@@ -90,7 +90,7 @@ namespace Missile_Master
         #endregion
 
         #region Strings
-        readonly string[] mainMenuStrArr = new string[6] { "Campaign", "Level Select", "Shop", "Options", "Credits", "Exit" };
+        readonly string[] mainMenuStrArr = new string[] { "Campaign", "Level Select", "Shop", "Options", "Credits", "Exit" };
         string moneyStr;
         string fuelStr;
         #endregion
@@ -238,7 +238,7 @@ namespace Missile_Master
                     playerPos.Y = this.Window.ClientBounds.Height - 120;
                     break;
                 default:
-                    throw new InvalidOperationException("Unexpected value for 'gameState' : " + gameState);
+                    throw new InvalidOperationException("Unexpected value for 'gameState' = " + gameState);
             }
             GameIsActive = false;
             playerAccel = 0;
@@ -355,7 +355,7 @@ namespace Missile_Master
                             case 5: gameState = GameStates.Exit;
                                 break;
                             default:
-                                throw new InvalidOperationException("Unexpected value for 'selected' : " + selected);
+                                throw new InvalidOperationException("Unexpected value for 'selected' = " + selected);
                         }
                     }
                     #endregion
@@ -428,7 +428,7 @@ namespace Missile_Master
                                 gameState = GameStates.Exit;
                                 break;
                             default:
-                                throw new InvalidOperationException("Unexpected value for 'selected' : " + selected);
+                                throw new InvalidOperationException("Unexpected value for 'selected' = " + selected);
                         }
                     }
                     #endregion
@@ -498,6 +498,8 @@ namespace Missile_Master
                             case 5:
                                 gameState = GameStates.Exit;
                                 break;
+                            default:
+                                throw new InvalidOperationException("Unexpected value for 'selected' = " + selected);
                         }
                     }
                     #endregion
@@ -545,11 +547,11 @@ namespace Missile_Master
 
                         if (GameIsActive)
                         {
-                        // Gravity
-                        gravityMomentum += gravity;
-                        playerPos.Y += gravityMomentum;
-                        // Air resistence 
-                        if (playerAccel >= 2 * airResistence) playerAccel -= airResistence;
+                            // Gravity
+                            gravityMomentum += gravity;
+                            playerPos.Y += gravityMomentum;
+                            // Air resistence 
+                            if (playerAccel >= 2 * airResistence) { playerAccel -= airResistence; }
                         }
                         // Direction
                         playerDirection = new Vector2((float)Math.Cos(playerAngle), (float)Math.Sin(playerAngle));
@@ -672,7 +674,7 @@ namespace Missile_Master
 
                 #region Default
                 default:
-                    throw new InvalidOperationException("Unexpected value for gamestate : " + gameState);
+                    throw new InvalidOperationException("Unexpected value for gamestate = " + gameState);
                     #endregion
             }
 
@@ -994,7 +996,9 @@ namespace Missile_Master
                         this.Window.ClientBounds.Height),
                         Color.White);
                     break;
-                    #endregion
+                #endregion
+                default:
+                    throw new InvalidOperationException("Unexpected value for gameState = " + gameState);
             }
 
             spriteBatch.End();
