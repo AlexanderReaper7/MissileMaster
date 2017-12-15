@@ -13,7 +13,7 @@ namespace Missile_Master
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
+        readonly GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
         #region Variables
@@ -27,14 +27,14 @@ namespace Missile_Master
         Vector2 playerOrigin;
         Vector2 playerPos;
         Vector2 playerDirection;
-        bool playerDead = false;
+        bool playerDead;
         Rectangle playerRect;
         #endregion
 
         #region Floats
-        float gravity = 0.1f;
+        const float gravity = 0.1f;
         float gravityMomentum; 
-        float airResistence = 0.1f;
+        const float airResistence = 0.1f;
         float windowMaxX;
         float windowMaxY;
         float mainThrusterPower;
@@ -45,8 +45,8 @@ namespace Missile_Master
 
         #region Integers
         int selectionIndex;
-        int selected = 0;
-        long money = 0; // it is 64bit to ensure player can have a lot of money
+        int selected;
+        long money; // it is 64bit to ensure player can have a lot of money
         const int coin1Size = 24;
         const int defaultfuel = 3000;
 
@@ -72,8 +72,8 @@ namespace Missile_Master
         #endregion
 
         #region Booleans
-        bool cheatsActive = false; // TODO : Create Cheats
-        bool KeyIsUp = false;
+        bool cheatsActive; // TODO : Create Cheats
+        bool KeyIsUp;
         bool firstRun = true;
         bool building1Dead;
         bool coin1IsActive_0;
@@ -86,14 +86,13 @@ namespace Missile_Master
         bool coin1IsActive_7;
         bool coin1IsActive_8;
         bool coin1IsActive_9;
-        bool GameIsActive = false;
+        bool GameIsActive;
         #endregion
 
         #region Strings
-        string[] mainMenuStrArr = new string[6] { "Campaign", "Level Select", "Shop", "Options", "Credits", "Exit" };
+        readonly string[] mainMenuStrArr = new string[6] { "Campaign", "Level Select", "Shop", "Options", "Credits", "Exit" };
         string moneyStr;
         string fuelStr;
-
         #endregion
 
         #region Soundeffects
@@ -122,8 +121,6 @@ namespace Missile_Master
         Rectangle coin1Rect_7;
         Rectangle coin1Rect_8;
         Rectangle coin1Rect_9;
-        Rectangle windowMaxYRect;
-
         #endregion
 
         #region Upgrades
@@ -222,9 +219,7 @@ namespace Missile_Master
             explosion1Origin.X = Explosion1Tex.Width / 2;
             explosion1Origin.Y = Explosion1Tex.Height / 2;
 
-            Console.WriteLine(mainMenuStrArr[1]);
-            windowMaxYRect = new Rectangle(0, (int)windowMaxY - 1, (int)windowMaxX, 1);
-            
+            Console.WriteLine(mainMenuStrArr[1]);            
         }
 
 
@@ -242,6 +237,8 @@ namespace Missile_Master
                     playerPos.X = 40;
                     playerPos.Y = this.Window.ClientBounds.Height - 120;
                     break;
+                default:
+                    throw new InvalidOperationException("Unexpected value for 'gameState' : " + gameState);
             }
             GameIsActive = false;
             playerAccel = 0;
@@ -300,8 +297,7 @@ namespace Missile_Master
 
             #region Game Exit
             //back or End exits the game
-            if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.End))
-                this.Exit();
+            if (gamepad.Buttons.Back == ButtonState.Pressed || keyboard.IsKeyDown(Keys.End)) { this.Exit(); }
             #endregion
 
             #region Fullscreen
@@ -358,7 +354,9 @@ namespace Missile_Master
                                 break;
                             case 5: gameState = GameStates.Exit;
                                 break;
-                                }
+                            default:
+                                throw new InvalidOperationException("Unexpected value for 'selected' : " + selected);
+                        }
                     }
                     #endregion
 
@@ -429,6 +427,8 @@ namespace Missile_Master
                             case 5:
                                 gameState = GameStates.Exit;
                                 break;
+                            default:
+                                throw new InvalidOperationException("Unexpected value for 'selected' : " + selected);
                         }
                     }
                     #endregion
@@ -578,7 +578,7 @@ namespace Missile_Master
                             playerAccel += mainThrusterPower;
                             // Use fuel
                             fuel -= fuelEfficency;
-                            if (fuel < 0) fuel = 0;
+                            if (fuel < 0) { fuel = 0; }
                             // Speedlimit
                             if (playerAccel > playerMaxSpeed)
                             {
@@ -668,8 +668,12 @@ namespace Missile_Master
                 case GameStates.Exit:
                     this.Exit();
                     break;
-                    #endregion
+                #endregion
 
+                #region Default
+                default:
+                    throw new InvalidOperationException("Unexpected value for gamestate : " + gameState);
+                    #endregion
             }
 
 
@@ -782,17 +786,16 @@ namespace Missile_Master
                     }
 
                     //Exit
-                    string exit = "Exit";
-                    Vector2 exitOrigin = RobotoRegular36.MeasureString(exit) / 2;
+                    Vector2 exitOrigin = RobotoRegular36.MeasureString(mainMenuStrArr[5]) / 2;
                     Vector2 exitPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 65);
                     if (selected == 5)
                     {
-                        spriteBatch.DrawString(RobotoBold36, exit, exitPos, Color.White,
+                        spriteBatch.DrawString(RobotoBold36, mainMenuStrArr[5], exitPos, Color.White,
                                 0, exitOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
                     else
                     {
-                        spriteBatch.DrawString(RobotoRegular36, exit, exitPos, Color.White,
+                        spriteBatch.DrawString(RobotoRegular36, mainMenuStrArr[5], exitPos, Color.White,
                                 0, exitOrigin, 1.0f, SpriteEffects.None, 0.5f);
                     }
                     break;
@@ -946,12 +949,12 @@ namespace Missile_Master
                             1f
                             );
                     }
-                    if (coin1IsActive_0) spriteBatch.Draw(Coin1, coin1Rect_0, Color.White);
-                    if (coin1IsActive_1) spriteBatch.Draw(Coin1, coin1Rect_1, Color.White);
-                    if (coin1IsActive_2) spriteBatch.Draw(Coin1, coin1Rect_2, Color.White);
-                    if (coin1IsActive_3) spriteBatch.Draw(Coin1, coin1Rect_3, Color.White);
-                    if (coin1IsActive_4) spriteBatch.Draw(Coin1, coin1Rect_4, Color.White);
-                    if (coin1IsActive_5) spriteBatch.Draw(Coin1, coin1Rect_5, Color.White);
+                    if (coin1IsActive_0) { spriteBatch.Draw(Coin1, coin1Rect_0, Color.White); }
+                    if (coin1IsActive_1) { spriteBatch.Draw(Coin1, coin1Rect_1, Color.White); }
+                    if (coin1IsActive_2) { spriteBatch.Draw(Coin1, coin1Rect_2, Color.White); }
+                    if (coin1IsActive_3) { spriteBatch.Draw(Coin1, coin1Rect_3, Color.White); }
+                    if (coin1IsActive_4) { spriteBatch.Draw(Coin1, coin1Rect_4, Color.White); }
+                    if (coin1IsActive_5) { spriteBatch.Draw(Coin1, coin1Rect_5, Color.White); }
 
                     break;
                     #endregion
