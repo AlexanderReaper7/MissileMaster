@@ -10,8 +10,9 @@ Content\Textures\OptionsBG.xnb
 Content\Textures\ShopBG.xnb
 Content\Textures\RocketTest.xnb
 Content\Textures\Explosion1.xnb
+Content\Textures\coin1.xnb
 Content\Fonts\Roboto\RobotoRegular36.xnb
 Content\Fonts\Roboto\RobotoBold36.xnb
 Content\Text\Credits.xnb
 Content\Sounds\Explosion1.xnb
-Content\Textures\coin1.xnb
+Content\Sounds\Coin1.xnb

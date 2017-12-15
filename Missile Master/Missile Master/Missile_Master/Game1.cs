@@ -34,10 +34,13 @@ namespace Missile_Master
         #region Floats
         float gravity = 0.1f;
         float gravityMomentum; 
-        float airResistence = 0.2f;
+        float airResistence = 0.1f;
         float windowMaxX;
         float windowMaxY;
         float mainThrusterPower;
+        float sideThrusterPower;
+        float totalFuel;
+        float fuel;
         #endregion
 
         #region Integers
@@ -45,6 +48,8 @@ namespace Missile_Master
         int selected = 0;
         long money = 0; // it is 64bit to ensure player can have a lot of money
         const int coin1Size = 24;
+        const int defaultfuel = 10000;
+
         #endregion
 
         #region 2DTextures
@@ -81,17 +86,19 @@ namespace Missile_Master
         bool coin1IsActive_7;
         bool coin1IsActive_8;
         bool coin1IsActive_9;
-
+        bool GameIsActive = false;
         #endregion
 
         #region Strings
 
-        string[] MainMenuOptions = new string[] { "Campaign", "Level Select", "Shop", "Options", "Exit" };
-
+        // TODO : string[] MainMenuOptions = new string[] { "Campaign", "Level Select", "Shop", "Options", "Exit" };
+        string moneyStr;
+        string fuelStr;
         #endregion
 
         #region Soundeffects
         SoundEffect Explosion1Sound;
+        SoundEffect Coin1Sound;
         #endregion
 
         #region Fonts
@@ -115,18 +122,19 @@ namespace Missile_Master
         Rectangle coin1Rect_7;
         Rectangle coin1Rect_8;
         Rectangle coin1Rect_9;
-
+        Rectangle windowMaxYRect;
 
         #endregion
 
         #region Upgrades
         // TODO : Finish Upgrade Levels
         float mainThrusterLVL = 0.4f;
-        int bodyLVL = 1;
+        // int bodyLVL = 1;
         float sideThrusterLVL = 1f;
-        int payloadLVL = 1;
-        int fuelLVL = 1;
-        int DecoyLVL = 1;
+        // int payloadLVL = 1;
+        float fuelLVL = 1;
+        float fuelEfficency = 10f;
+        // int DecoyLVL = 1;
         #endregion
 
         // EXPERIMENTAL
@@ -199,6 +207,7 @@ namespace Missile_Master
 
             #region Soundeffects
             Explosion1Sound = Content.Load<SoundEffect>(@"Sounds/Explosion1");
+            Coin1Sound = Content.Load<SoundEffect>(@"Sounds/Coin1");
             #endregion
 
             #region Fonts
@@ -212,8 +221,7 @@ namespace Missile_Master
             playerOrigin.Y = PlayerTexture.Height / 2;
             explosion1Origin.X = Explosion1Tex.Width / 2;
             explosion1Origin.Y = Explosion1Tex.Height / 2;
-
-            playerRect = new Rectangle((int)playerPos.X, (int)playerPos.Y, PlayerTexture.Width, PlayerTexture.Height);
+            windowMaxYRect = new Rectangle(0, (int)windowMaxY - 1, (int)windowMaxX, 1);
             
         }
 
@@ -230,9 +238,11 @@ namespace Missile_Master
                     playerPos.Y = this.Window.ClientBounds.Height - 120;
                     break;
             }
+            GameIsActive = false;
             playerAccel = 0;
             playerAngle = 4.71f;
             gravityMomentum = 0;
+            fuel = totalFuel;
             coin1IsActive_0 = true;
             coin1IsActive_1 = true;
             coin1IsActive_2 = true;
@@ -250,7 +260,6 @@ namespace Missile_Master
             if (explosion1Rect.Intersects(building1Rect))
             {
                 building1Dead = true;
-                Console.WriteLine("Building 1 Dead");
             }
             Explosion1Sound.Play();
             //gameState = GameStates.Gameover; 
@@ -258,20 +267,17 @@ namespace Missile_Master
 
         public void CoinIntersection()
         {
-
-            coin1Rect_0 = new Rectangle(40, (int)windowMaxY - 240, coin1Size, coin1Size);
-            coin1Rect_1 = new Rectangle(40, 240, coin1Size, coin1Size);
-            coin1Rect_2 = new Rectangle(240, 240, coin1Size, coin1Size);
-            coin1Rect_3 = new Rectangle(360, 240, coin1Size, coin1Size);
-            coin1Rect_4 = new Rectangle((int)windowMaxX / 2, (int)windowMaxY / 2, coin1Size, coin1Size);
-            coin1Rect_5 = new Rectangle((int)windowMaxX - 480, (int)windowMaxY - 240, coin1Size, coin1Size);
-
-            if (coin1Rect_0.Intersects(playerRect) && coin1IsActive_0) { coin1IsActive_0 = false; money++; }
-            if (playerRect.Intersects(coin1Rect_1) && coin1IsActive_1) { coin1IsActive_1 = false; money++; }
-            if (playerRect.Intersects(coin1Rect_2) && coin1IsActive_2) { coin1IsActive_2 = false; money++; }
-            if (playerRect.Intersects(coin1Rect_3) && coin1IsActive_3) { coin1IsActive_3 = false; money++; }
-            if (playerRect.Intersects(coin1Rect_4) && coin1IsActive_4) { coin1IsActive_4 = false; money++; }
-            if (playerRect.Intersects(coin1Rect_5) && coin1IsActive_5) { coin1IsActive_5 = false; money++; }
+            // TODO : Make a CoinManager
+            if (playerRect.Intersects(coin1Rect_0) && coin1IsActive_0) { coin1IsActive_0 = false; money++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_1) && coin1IsActive_1) { coin1IsActive_1 = false; money++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_2) && coin1IsActive_2) { coin1IsActive_2 = false; money++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_3) && coin1IsActive_3) { coin1IsActive_3 = false; money++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_4) && coin1IsActive_4) { coin1IsActive_4 = false; money++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_5) && coin1IsActive_5) { coin1IsActive_5 = false; money++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_6) && coin1IsActive_6) { coin1IsActive_6 = false; money++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_7) && coin1IsActive_7) { coin1IsActive_7 = false; money++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_8) && coin1IsActive_8) { coin1IsActive_8 = false; money++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_9) && coin1IsActive_9) { coin1IsActive_9 = false; money++; Coin1Sound.Play(); }
         }
 
         protected override void Update(GameTime gameTime)
@@ -300,6 +306,11 @@ namespace Missile_Master
                 graphics.IsFullScreen = !graphics.IsFullScreen;
                 graphics.ApplyChanges();
             }
+            #endregion
+
+            #region Strings
+            moneyStr = "Money : " + money.ToString();
+            fuelStr = "Fuel : " + Math.Round(fuel, 0).ToString();
             #endregion
 
             switch (gameState)
@@ -492,106 +503,136 @@ namespace Missile_Master
 
                 #region Level1
                 case GameStates.Level1:
-                    if(!playerDead)
+                    if (!playerDead)
                     {
                         #region Physics
                         // TODO : make momentum last longer
                         if (firstRun)
                         {
-                            building1Rect = new Rectangle( 
+                            building1Rect = new Rectangle(
                                (int)windowMaxX - Building1.Width - Convert.ToInt32(Building1.Height * 0.2f),
                                (int)windowMaxY - Building1.Height - Convert.ToInt32(Building1.Height * 0.3f),
                                Building1.Width,
                                Building1.Height
                            );
 
+                            coin1Rect_0 = new Rectangle(40, (int)windowMaxY - 240, coin1Size, coin1Size);
+                            coin1Rect_1 = new Rectangle(40, 240, coin1Size, coin1Size);
+                            coin1Rect_2 = new Rectangle(240, 240, coin1Size, coin1Size);
+                            coin1Rect_3 = new Rectangle(360, 240, coin1Size, coin1Size);
+                            coin1Rect_4 = new Rectangle((int)windowMaxX / 2, (int)windowMaxY / 2, coin1Size, coin1Size);
+                            coin1Rect_5 = new Rectangle((int)windowMaxX - 480, (int)windowMaxY - 240, coin1Size, coin1Size);
 
                             // total thruster power
-                            mainThrusterPower = (float)Math.Pow(mainThrusterLVL, 1.5f); 
+                            mainThrusterPower = (float)Math.Pow(mainThrusterLVL, 1.5f);
+                            sideThrusterPower = (float)Math.Pow(sideThrusterLVL, 1.5f);
+                            // fuel
+                            totalFuel = (float)Math.Pow(defaultfuel, fuelLVL);
                             ResetGame();
                             firstRun = false;
                         }
 
+                        // Collision with the ground
+                        if (playerRect.Intersects(windowMaxYRect))
+                        {
+                            PlayerExplode();
+                        }
+
+                        if (GameIsActive)
+                        {
                         // Gravity
                         gravityMomentum += gravity;
                         playerPos.Y += gravityMomentum;
                         // Air resistence 
-                        if(playerAccel >= airResistence) playerAccel -= airResistence;
+                        if (playerAccel >= 2 * airResistence) playerAccel -= airResistence;
+                        }
                         // Direction
                         playerDirection = new Vector2((float)Math.Cos(playerAngle), (float)Math.Sin(playerAngle));
+                        playerRect = new Rectangle((int)playerPos.X, (int)playerPos.Y, PlayerTexture.Width, PlayerTexture.Height);
+                        
 
-                        if (building1Rect.Intersects(playerRect))
-                        {
-                            PlayerExplode(); // TODO : fix collision
-                            Console.WriteLine("boom");
-                        }
 
                         #endregion
 
                         #region Objects
-                        // TODO : add coin sound
+                        // coins
                         CoinIntersection();
-
-
+                        // collison with building
+                        if (building1Rect.Intersects(playerRect))
+                        {
+                            PlayerExplode();
+                        }
                         #endregion
 
                         #region W key
-                        if (Keyboard.GetState().IsKeyDown(Keys.W))
+                        if (Keyboard.GetState().IsKeyDown(Keys.W) && fuel > 0)
                         {
                             //reduce gravity momentum
                             gravityMomentum *= 0.9f;
                             // Accelerate
                             playerAccel += mainThrusterPower;
+                            // Use fuel
+                            fuel -= fuelEfficency;
+                            if (fuel < 0) fuel = 0;
                             // Speedlimit
-                            if (playerAccel > playerMaxSpeed) 
+                            if (playerAccel > playerMaxSpeed)
                             {
                                 playerAccel = playerMaxSpeed;
                             }
+                            // Start game on first press of W
+                            if (!GameIsActive)
+                            {
+                                GameIsActive = true;
+                            }
                         }
                         #endregion
-
-                        #region A key
-                        if (Keyboard.GetState().IsKeyDown(Keys.A))
+                        if (GameIsActive)
                         {
-                            //rotate counter-clockwise
-                            playerAngle -= playerTurnRate;
-                        }
-                        #endregion
+                            #region A key
+                            if (Keyboard.GetState().IsKeyDown(Keys.A) && fuel > 0)
+                            {
+                                //rotate counter-clockwise
+                                playerAngle -= playerTurnRate;
+                                fuel -= fuelEfficency / 3;
+                            }
+                            #endregion
 
-                        #region S key
-                        if (Keyboard.GetState().IsKeyDown(Keys.S))
-                        {
-                            //decelerate
-                            playerAccel *= 0.9f;
-                        }
-                        #endregion
+                            #region S key
+                            if (Keyboard.GetState().IsKeyDown(Keys.S)) // TODO : What to do with this?
+                            {
+                                //decelerate
+                                playerAccel *= 0.9f;
+                            }
+                            #endregion
 
-                        #region D key
-                        if (Keyboard.GetState().IsKeyDown(Keys.D))
-                        {
-                            //rotate clockwise
-                            playerAngle += playerTurnRate;
-                        }
+                            #region D key
+                            if (Keyboard.GetState().IsKeyDown(Keys.D) && fuel > 0)
+                            {
+                                //rotate clockwise
+                                playerAngle += playerTurnRate;
+                                fuel -= fuelEfficency / 3;
+                            }
+                            #endregion
+
+                            #region Space Key
+                            if (Keyboard.GetState().IsKeyDown(Keys.Space) && GameIsActive)
+                            {
+                                PlayerExplode();
+                            }
+                            #endregion
+
                             // Update Player Position
                             playerPos += playerDirection * playerAccel;
 
-                        #endregion
-
-                        #region Space Key
-                        if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                        {
-                            PlayerExplode();
                         }
-
-                        #endregion
-
                     }
-                         #region R Key
+                    #region R Key
                         if (Keyboard.GetState().IsKeyDown(Keys.R))
                         {
                             ResetGame();
                         }
                         #endregion
+                    
                    break;
                 #endregion
 
@@ -824,6 +865,44 @@ namespace Missile_Master
                             this.Window.ClientBounds.Height),
                             Color.White
                             );
+
+                    spriteBatch.DrawString // Money
+                        (
+                        RobotoRegular36,
+                        moneyStr,
+                        new Vector2(0, 0),
+                        Color.White
+                        );
+                    if(fuel > 0)
+                    {
+                    spriteBatch.DrawString // Fuel
+                        (
+                        RobotoRegular36,
+                        fuelStr,
+                        new Vector2(0, 50),
+                        Color.White
+                        );
+                    }
+                    else if (fuel < totalFuel / 5)
+                    {
+                        spriteBatch.DrawString // Fuel
+                            (
+                            RobotoRegular36,
+                            fuelStr,
+                            new Vector2(0, 50),
+                            Color.Orange
+                            );
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString // Fuel
+                            (
+                            RobotoRegular36,
+                            fuelStr,
+                            new Vector2(0, 50),
+                            Color.Red
+                            );
+                    }
 
                         spriteBatch.Draw // Building 1
                             (
