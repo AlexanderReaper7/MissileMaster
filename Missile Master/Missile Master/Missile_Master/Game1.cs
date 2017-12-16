@@ -91,6 +91,8 @@ namespace Missile_Master
 
         #region Strings
         readonly string[] mainMenuStrArr = new string[] { "Campaign", "Level Select", "Shop", "Options", "Credits", "Exit" };
+        readonly string[] campaingStrArr = new string[] { "New", "Continue", "back" };
+        readonly char[] levelSelectChrArr = new char[] { '1' }; // TODO : Add more levels
         string moneyStr;
         string fuelStr;
         #endregion
@@ -218,8 +220,6 @@ namespace Missile_Master
             playerOrigin.Y = PlayerTexture.Height / 2;
             explosion1Origin.X = Explosion1Tex.Width / 2;
             explosion1Origin.Y = Explosion1Tex.Height / 2;
-
-            Console.WriteLine(mainMenuStrArr[1]);            
         }
 
 
@@ -654,8 +654,25 @@ namespace Missile_Master
                 #region Campaign
                 case GameStates.Campaign:
 
+                    selectionIndex = 2; //number of menu options
 
+                    #region Menu Controls
+                    if (Keyboard.GetState().IsKeyUp(Keys.S) && Keyboard.GetState().IsKeyUp(Keys.Down) && Keyboard.GetState().IsKeyUp(Keys.W) && Keyboard.GetState().IsKeyUp(Keys.Up)) { KeyIsUp = true; } // detect if key is up
+                    if (KeyIsUp)
+                    {
+                        if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) //detect if key is down
+                        {
+                            KeyIsUp = false;
+                            if (selected < selectionIndex) { selected++; }
+                        }
 
+                        if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up))
+                        {
+                            KeyIsUp = false;
+                            if (selected > 0) { selected--; }
+                        }
+                    }
+                    #endregion
                     break;
                 #endregion
 
@@ -983,6 +1000,52 @@ namespace Missile_Master
                         this.Window.ClientBounds.Width,
                         this.Window.ClientBounds.Height),
                         Color.White);
+
+                    // New
+                    Vector2 newOrigin = RobotoRegular36.MeasureString(campaingStrArr[0]) / 2;
+                    Vector2 newPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 25);
+                    if (selected == 0)
+                    {
+                        spriteBatch.DrawString(RobotoBold36, campaingStrArr[0], newPos, Color.White,
+                                0, newOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(RobotoRegular36, campaingStrArr[0], newPos, Color.White,
+                                0, newOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+
+                    // Continue
+                    Vector2 continueOrigin = RobotoRegular36.MeasureString(campaingStrArr[1]) / 2;
+                    Vector2 continuePos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 50);
+                    if (selected == 1)
+                    {
+                        spriteBatch.DrawString(RobotoBold36, campaingStrArr[1], continuePos, Color.White,
+                                0, continueOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(RobotoRegular36, campaingStrArr[1], continuePos, Color.White,
+                                0, continueOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+
+                    // Back
+                    Vector2 backOrigin = RobotoRegular36.MeasureString(campaingStrArr[2]) / 2;
+                    Vector2 backPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 75);
+                    if (selected == 2)
+                    {
+                        spriteBatch.DrawString(RobotoBold36, campaingStrArr[2], backPos, Color.White,
+                                0, backOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString(RobotoRegular36, campaingStrArr[2], backPos, Color.White,
+                                0, backOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                    }
+
+
+
+
                     break;
                 #endregion
 
