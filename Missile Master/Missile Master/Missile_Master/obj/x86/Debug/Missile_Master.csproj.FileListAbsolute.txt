@@ -29,7 +29,6 @@ C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Miss
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\CheatsBG.xnb
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\CampaignBG.xnb
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\GameoverBG.xnb
-C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\Level1BG.xnb
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\LevelSelectBG.xnb
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\OptionsBG.xnb
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\ShopBG.xnb
@@ -92,3 +91,5 @@ C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Mi
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\coin1.xnb
 C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Sounds\Coin1.xnb
 C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Sounds\Coin1.xnb
+C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\Level2BG.xnb
+C:\Users\alexander.oberg4\Desktop\Alexander_Öberg_Spel_HT17\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\Level1BG.xnb

@@ -4,7 +4,6 @@ Content\Textures\CreditsBG.xnb
 Content\Textures\CheatsBG.xnb
 Content\Textures\CampaignBG.xnb
 Content\Textures\GameoverBG.xnb
-Content\Textures\Level1BG.xnb
 Content\Textures\LevelSelectBG.xnb
 Content\Textures\OptionsBG.xnb
 Content\Textures\ShopBG.xnb
@@ -16,3 +15,5 @@ Content\Fonts\Roboto\RobotoBold36.xnb
 Content\Text\Credits.xnb
 Content\Sounds\Explosion1.xnb
 Content\Sounds\Coin1.xnb
+Content\Textures\Level2BG.xnb
+Content\Textures\Level1BG.xnb

@@ -50,7 +50,7 @@ namespace Missile_Master
         int sesionMoney;
         const int coin1Size = 24;
         const int defaultfuel = 3000;
-
+        int currentLevel;
         #endregion
 
         #region 2DTextures
@@ -64,8 +64,13 @@ namespace Missile_Master
         Texture2D GameoverBG;
         Texture2D Explosion1Tex;
         Texture2D Coin1;
+
         #region Level1
         Texture2D Level1BG;
+        #endregion
+
+        #region Level2
+        Texture2D Level2BG;
         Texture2D Building1;
         Rectangle building1Rect;
         #endregion
@@ -131,10 +136,6 @@ namespace Missile_Master
         // int DecoyLVL = 1;
         #endregion
 
-        // EXPERIMENTAL
-
-        // ------------
-
         #region States
         //gamestates
         enum GameStates
@@ -147,6 +148,7 @@ namespace Missile_Master
             #region Levels
             // TODO : Make more Levels
             Level1,
+            Level2,
             #endregion
             Shop,
             Campaign,
@@ -190,11 +192,10 @@ namespace Missile_Master
             GameoverBG = Content.Load<Texture2D>(@"Textures/GameoverBG");
             Explosion1Tex = Content.Load<Texture2D>(@"Textures/Explosion1");
             Coin1 = Content.Load<Texture2D>(@"Textures/Coin1");
-            #region Level1
             Level1BG = Content.Load<Texture2D>(@"Textures/Level1BG");
             PlayerTexture = Content.Load<Texture2D>(@"Textures/RocketTest");
             Building1 = Content.Load<Texture2D>(@"Textures/Building1");
-            #endregion
+            Level2BG = Content.Load<Texture2D>(@"Textures/Level2BG");
 
             #endregion
 
@@ -229,11 +230,16 @@ namespace Missile_Master
             switch (gameState) // Starting positions
             {
                 case GameStates.Level1:
+                    playerPos.X = 150;
+                    playerPos.Y = this.Window.ClientBounds.Height - 200;
+                    break;
+                case GameStates.Level2:
                     playerPos.X = 40;
-                    playerPos.Y = this.Window.ClientBounds.Height - 120;
+                    playerPos.Y = this.Window.ClientBounds.Height - 160;
                     break;
                 default:
                     throw new InvalidOperationException("Unexpected value for 'gameState' = " + gameState);
+
             }
             GameIsActive = false;
             sesionMoney = 0;
@@ -241,12 +247,26 @@ namespace Missile_Master
             playerAngle = 4.71f;
             gravityMomentum = 0;
             fuel = totalFuel;
-            coin1IsActive_0 = true;
-            coin1IsActive_1 = true;
-            coin1IsActive_2 = true;
-            coin1IsActive_3 = true;
-            coin1IsActive_4 = true;
-            coin1IsActive_5 = true;
+            switch (gameState)
+            {
+            case GameStates.Level1:
+                coin1IsActive_0 = true;
+                break;
+
+            case GameStates.Level2:
+                coin1IsActive_0 = true;
+                coin1IsActive_1 = true;
+                coin1IsActive_2 = true;
+                coin1IsActive_3 = true;
+                coin1IsActive_4 = true;
+                coin1IsActive_5 = true;
+                break;
+
+                default:
+                    throw new InvalidOperationException("Unexpected value for gameState = " + gameState);
+
+            }
+
             building1Dead = false;
             won = false;
             playerDead = false;
@@ -256,6 +276,7 @@ namespace Missile_Master
         {
             playerDead = true;
             explosion1Rect = new Rectangle((int)playerPos.X, (int)playerPos.Y, 100, 100);
+            // Win Lose Detection
             if (explosion1Rect.Intersects(building1Rect))
             {
                 building1Dead = true;
@@ -271,6 +292,7 @@ namespace Missile_Master
                 firstRun = true;
             }
             Explosion1Sound.Play();
+            gameState = GameStates.Gameover;
         }
 
         public void CoinIntersection()
@@ -571,7 +593,137 @@ namespace Missile_Master
                                Building1.Width,
                                Building1.Height
                            );
+                            currentLevel = 1;
+                            // Coin Positions
+                            coin1Rect_0 = new Rectangle(482, 295, coin1Size, coin1Size);
 
+                            // total thruster power
+                            mainThrusterPower = (float)Math.Pow(mainThrusterLVL, 1.5f);
+                            sideThrusterPower = (float)Math.Pow(sideThrusterLVL, 1.5f);
+                            // fuel
+                            totalFuel = (float)Math.Pow(defaultfuel, fuelLVL);
+                            ResetGame();
+                            firstRun = false;
+                        }
+                        // Collision with the ground
+                        if (playerPos.Y > windowMaxY - 16)
+                        {
+                            PlayerExplode();
+                        }
+
+                        if (GameIsActive)
+                        {
+                            // Gravity
+                            gravityMomentum += gravity;
+                            playerPos.Y += gravityMomentum;
+                            // Air resistence 
+                            if (playerAccel >= 2 * airResistence) { playerAccel -= airResistence; }
+                        }
+                        // Direction
+                        playerDirection = new Vector2((float)Math.Cos(playerAngle), (float)Math.Sin(playerAngle));
+                        playerRect = new Rectangle((int)playerPos.X, (int)playerPos.Y, PlayerTexture.Width, PlayerTexture.Height);
+
+
+
+                        #endregion
+
+                        #region Objects
+                        // coins
+                        CoinIntersection();
+                        // collison with building
+                        if (building1Rect.Intersects(playerRect))
+                        {
+                            PlayerExplode();
+                        }
+                        #endregion
+
+                        #region W key
+                        if (Keyboard.GetState().IsKeyDown(Keys.W) && fuel > 0)
+                        {
+                            //reduce gravity momentum
+                            gravityMomentum *= 0.9f;
+                            // Accelerate
+                            playerAccel += mainThrusterPower;
+                            // Use fuel
+                            fuel -= fuelEfficency;
+                            if (fuel < 0) { fuel = 0; }
+                            // Speedlimit
+                            if (playerAccel > playerMaxSpeed)
+                            {
+                                playerAccel = playerMaxSpeed;
+                            }
+                            // Start game on first press of W
+                            if (!GameIsActive)
+                            {
+                                GameIsActive = true;
+                            }
+                        }
+                        #endregion
+                        if (GameIsActive)
+                        {
+                            #region A key
+                            if (Keyboard.GetState().IsKeyDown(Keys.A) && fuel > 0)
+                            {
+                                //rotate counter-clockwise
+                                playerAngle -= playerTurnRate;
+                                fuel -= fuelEfficency / 3;
+                            }
+                            #endregion
+
+                            #region S key
+                            if (Keyboard.GetState().IsKeyDown(Keys.S)) // TODO : What to do with this?
+                            {
+                                //decelerate
+                                playerAccel *= 0.9f;
+                            }
+                            #endregion
+
+                            #region D key
+                            if (Keyboard.GetState().IsKeyDown(Keys.D) && fuel > 0)
+                            {
+                                //rotate clockwise
+                                playerAngle += playerTurnRate;
+                                fuel -= fuelEfficency / 3;
+                            }
+                            #endregion
+
+                            #region Space Key
+                            if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                            {
+                                PlayerExplode();
+                            }
+                            #endregion
+
+                            // Update Player Position
+                            playerPos += playerDirection * playerAccel;
+
+                        }
+                    }
+                    #region R Key
+                    if (Keyboard.GetState().IsKeyDown(Keys.R))
+                    {
+                        ResetGame();
+                    }
+                    #endregion
+
+                    break;
+                #endregion
+
+                #region Level2
+                case GameStates.Level2:
+                    if (!playerDead)
+                    {
+                        #region Physics
+                        // TODO : make momentum last longer
+                        if (firstRun)
+                        {
+                            building1Rect = new Rectangle(
+                               (int)windowMaxX - Building1.Width - Convert.ToInt32(Building1.Height * 0.2f),
+                               (int)windowMaxY - Building1.Height - Convert.ToInt32(Building1.Height * 0.3f),
+                               Building1.Width,
+                               Building1.Height
+                           );
+                            currentLevel = 2;
                             selectionIndex = 5; // Number of menu options
                             selected = 0; // Reset selected
 
@@ -673,7 +825,7 @@ namespace Missile_Master
                             #endregion
 
                             #region Space Key
-                            if (Keyboard.GetState().IsKeyDown(Keys.Space) && GameIsActive)
+                            if (Keyboard.GetState().IsKeyDown(Keys.Space))
                             {
                                 PlayerExplode();
                             }
@@ -767,6 +919,26 @@ namespace Missile_Master
 
                 #region Gameover
                 case GameStates.Gameover:
+                    if (firstRun)
+                    {
+                        firstRun = false;
+                    }
+
+                    #region R Key
+                    if (Keyboard.GetState().IsKeyDown(Keys.R))
+                    {
+                        switch (currentLevel)
+                        {
+                            case 1:
+                                gameState = GameStates.Level1;
+                                    break;
+                            case 2:
+                                gameState = GameStates.Level2;
+                                    break;
+                        }
+                        ResetGame();
+                    }
+                    #endregion
 
                     break;
                 #endregion
@@ -964,12 +1136,105 @@ namespace Missile_Master
                 #endregion
 
                 #region Levels
-                    #region Level 1
-                    case GameStates.Level1:
+                #region Level 1
+                case GameStates.Level1:
+                    spriteBatch.Draw // Background
+                            (
+                            Level1BG,
+                            new Rectangle(0, 0,
+                            this.Window.ClientBounds.Width,
+                            this.Window.ClientBounds.Height),
+                            Color.White
+                            );
+
+                    spriteBatch.DrawString // Money
+                        (
+                        RobotoRegular36,
+                        sesionMoneyStr,
+                        new Vector2(0, 0),
+                        Color.Gray
+                        );
+                    // Fuel in diffrent colors 
+                    if (fuel > totalFuel / 5)
+                    {
+                        spriteBatch.DrawString
+                            (
+                            RobotoRegular36,
+                            fuelStr,
+                            new Vector2(0, 50),
+                            Color.Gray
+                            );
+                    }
+                    else if (fuel <= totalFuel / 5)
+                    {
+                        spriteBatch.DrawString // Fuel
+                            (
+                            RobotoRegular36,
+                            fuelStr,
+                            new Vector2(0, 50),
+                            Color.Orange
+                            );
+                    }
+                    else
+                    {
+                        spriteBatch.DrawString // Fuel
+                            (
+                            RobotoRegular36,
+                            fuelStr,
+                            new Vector2(0, 50),
+                            Color.Red
+                            );
+                    }
+
+                    spriteBatch.Draw // Building 1
+                        (
+                        Building1,
+                        building1Rect,
+                        null,
+                        Color.White,
+                        0f,
+                        new Vector2(0, 0),
+                        SpriteEffects.None,
+                        0.5f
+                        );
+                    if (!playerDead)
+                    {
+
+
+                        spriteBatch.Draw // Player
+                            (
+                            PlayerTexture,
+                            new Rectangle((int)playerPos.X, (int)playerPos.Y, (int)PlayerTexture.Width, (int)PlayerTexture.Height),
+                            null,
+                            Color.White,
+                            playerAngle,
+                            playerOrigin,
+                            SpriteEffects.None,
+                            1f
+                            );
+                    }
+                    else
+                    {
+                        spriteBatch.Draw // Explosion
+                            (
+                            Explosion1Tex,
+                            explosion1Rect,
+                            null,
+                            Color.White,
+                            0f,
+                            explosion1Origin,
+                            SpriteEffects.None,
+                            1f
+                            );
+                    }
+                    if (coin1IsActive_0) { spriteBatch.Draw(Coin1, coin1Rect_0, Color.White); }
+                    break;
+
+                    case GameStates.Level2:
 
                         spriteBatch.Draw // Background
                             ( 
-                            Level1BG,
+                            Level2BG,
                             new Rectangle(0, 0,
                             this.Window.ClientBounds.Width,
                             this.Window.ClientBounds.Height),
@@ -1140,6 +1405,9 @@ namespace Missile_Master
                 #region Gameover
                 case GameStates.Gameover:
 
+                    string wonStrPt1 = "Level";
+                    string wonStrPt2 = "Complete";
+
                     spriteBatch.Draw( //Background
                         GameoverBG,
                         new Rectangle(0, 0,
@@ -1147,6 +1415,19 @@ namespace Missile_Master
                         this.Window.ClientBounds.Height),
                         Color.White);
                     break;
+
+                    if (won)
+                    {
+                        spriteBatch.DrawString
+                            (
+                            RobotoBold36,
+                            
+                            );
+                    }
+                    else
+                    {
+
+                    }
                 #endregion
                 default:
                     throw new InvalidOperationException("Unexpected value for gameState = " + gameState);
