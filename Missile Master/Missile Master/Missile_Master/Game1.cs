@@ -924,13 +924,31 @@ namespace Missile_Master
                         firstRun = false;
                     }
 
-                    #region R Key
-                    if (Keyboard.GetState().IsKeyDown(Keys.R))
+
+                    if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+                    {
+                        switch(currentLevel)
+                        {
+                            case 1:
+                                gameState = GameStates.Level1;
+                                break;
+
+                            case 2:
+                                gameState = GameStates.Level2;
+                                break;
+                            default:
+                                throw new InvalidOperationException("Unexpected value for currentLevel = " + currentLevel);
+                        }
+                    }
+
+
+                        #region R Key
+                        if (Keyboard.GetState().IsKeyDown(Keys.R))
                     {
                         switch (currentLevel)
                         {
                             case 1:
-                                gameState = GameStates.Level1;
+                                gameState = GameStates.Level2;
                                     break;
                             case 2:
                                 gameState = GameStates.Level2;
@@ -1405,29 +1423,38 @@ namespace Missile_Master
                 #region Gameover
                 case GameStates.Gameover:
 
-                    string wonStrPt1 = "Level";
-                    string wonStrPt2 = "Complete";
+                    string winStr = "Level " + currentLevel + " complete";
+                    string lossStr = "Level " + currentLevel + " failed";
+                    string continueStr = "Press Enter to continue or R to retry";
+                    Vector2 WinOrigin = RobotoRegular36.MeasureString(winStr) / 2;
+                    Vector2 lossOrigin = RobotoRegular36.MeasureString(lossStr) / 2;
+                    Vector2 contuinueOrigin2 = RobotoRegular36.MeasureString(continueStr) / 2;
+                    Vector2 continuePos2 = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 40);
+                    Vector2 winPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 30);
 
                     spriteBatch.Draw( //Background
-                        GameoverBG,
+                        CampaignBG,
                         new Rectangle(0, 0,
                         this.Window.ClientBounds.Width,
                         this.Window.ClientBounds.Height),
                         Color.White);
-                    break;
 
                     if (won)
-                    {
-                        spriteBatch.DrawString
-                            (
-                            RobotoBold36,
-                            
-                            );
+                        {
+                            spriteBatch.DrawString(RobotoBold36, winStr, winPos, Color.Black,
+                                    0, WinOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                        spriteBatch.DrawString(RobotoRegular36, continueStr, continuePos2, Color.Black,
+                                0, contuinueOrigin2, 1.0f, SpriteEffects.None, 0.5f);
                     }
-                    else
-                    {
+                    if (!won)
+                        {
+                            spriteBatch.DrawString(RobotoBold36, lossStr, winPos, Color.Black,
+                                    0, lossOrigin, 1.0f, SpriteEffects.None, 0.5f);
+                                spriteBatch.DrawString(RobotoRegular36, continueStr, continuePos2, Color.Black,
+                0, WinOrigin, 1.0f, SpriteEffects.None, 0.5f);
 
                     }
+                    break;
                 #endregion
                 default:
                     throw new InvalidOperationException("Unexpected value for gameState = " + gameState);
