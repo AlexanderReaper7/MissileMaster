@@ -44,7 +44,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\CampaignBG.xnb</Output>
-      <Time>2017-12-01T16:35:30.7984984+01:00</Time>
+      <Time>2017-12-01T16:35:30.8285191+01:00</Time>
     </Item>
     <Item>
       <Source>Textures\GameoverBG_4K.png</Source>
@@ -71,7 +71,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Alexander.oberg4\Desktop\MissileMaster\Missile Master\Missile Master\Missile_Master\bin\x86\Debug\Content\Textures\LevelSelectBG.xnb</Output>
-      <Time>2017-12-01T16:35:30.8265174+01:00</Time>
+      <Time>2017-12-01T16:35:30.8285191+01:00</Time>
     </Item>
     <Item>
       <Source>Textures\OptionsBG_4K.png</Source>

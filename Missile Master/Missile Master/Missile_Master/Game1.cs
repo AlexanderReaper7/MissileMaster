@@ -47,6 +47,7 @@ namespace Missile_Master
         int selectionIndex;
         int selected;
         long money; // it is 64bit to ensure player can have a lot of money
+        int sesionMoney;
         const int coin1Size = 24;
         const int defaultfuel = 3000;
 
@@ -82,11 +83,8 @@ namespace Missile_Master
         bool coin1IsActive_3;
         bool coin1IsActive_4;
         bool coin1IsActive_5;
-        bool coin1IsActive_6;
-        bool coin1IsActive_7;
-        bool coin1IsActive_8;
-        bool coin1IsActive_9;
         bool GameIsActive;
+        bool won;
         #endregion
 
         #region Strings
@@ -94,6 +92,7 @@ namespace Missile_Master
         readonly string[] campaingStrArr = new string[] { "New", "Continue", "back" };
         readonly char[] levelSelectChrArr = new char[] { '1' }; // TODO : Add more levels
         string moneyStr;
+        string sesionMoneyStr;
         string fuelStr;
         #endregion
 
@@ -119,10 +118,6 @@ namespace Missile_Master
         Rectangle coin1Rect_3;
         Rectangle coin1Rect_4;
         Rectangle coin1Rect_5;
-        Rectangle coin1Rect_6;
-        Rectangle coin1Rect_7;
-        Rectangle coin1Rect_8;
-        Rectangle coin1Rect_9;
         #endregion
 
         #region Upgrades
@@ -160,7 +155,7 @@ namespace Missile_Master
         };
 
         //starting gamestate
-        GameStates gameState = GameStates.Level1;
+        GameStates gameState = GameStates.MainMenu;
         #endregion 
 
         #endregion
@@ -241,6 +236,7 @@ namespace Missile_Master
                     throw new InvalidOperationException("Unexpected value for 'gameState' = " + gameState);
             }
             GameIsActive = false;
+            sesionMoney = 0;
             playerAccel = 0;
             playerAngle = 4.71f;
             gravityMomentum = 0;
@@ -252,6 +248,7 @@ namespace Missile_Master
             coin1IsActive_4 = true;
             coin1IsActive_5 = true;
             building1Dead = false;
+            won = false;
             playerDead = false;
         }
 
@@ -262,24 +259,29 @@ namespace Missile_Master
             if (explosion1Rect.Intersects(building1Rect))
             {
                 building1Dead = true;
+                Console.WriteLine("WON");
+                money += sesionMoney;
+                won = true;
+                firstRun = true;
+            }
+            else
+            {
+                Console.WriteLine("Lose");
+                won = false;
+                firstRun = true;
             }
             Explosion1Sound.Play();
-            //gameState = GameStates.Gameover; 
         }
 
         public void CoinIntersection()
         {
             // TODO : Make a CoinManager
-            if (playerRect.Intersects(coin1Rect_0) && coin1IsActive_0) { coin1IsActive_0 = false; money++; Coin1Sound.Play(); }
-            if (playerRect.Intersects(coin1Rect_1) && coin1IsActive_1) { coin1IsActive_1 = false; money++; Coin1Sound.Play(); }
-            if (playerRect.Intersects(coin1Rect_2) && coin1IsActive_2) { coin1IsActive_2 = false; money++; Coin1Sound.Play(); }
-            if (playerRect.Intersects(coin1Rect_3) && coin1IsActive_3) { coin1IsActive_3 = false; money++; Coin1Sound.Play(); }
-            if (playerRect.Intersects(coin1Rect_4) && coin1IsActive_4) { coin1IsActive_4 = false; money++; Coin1Sound.Play(); }
-            if (playerRect.Intersects(coin1Rect_5) && coin1IsActive_5) { coin1IsActive_5 = false; money++; Coin1Sound.Play(); }
-            if (playerRect.Intersects(coin1Rect_6) && coin1IsActive_6) { coin1IsActive_6 = false; money++; Coin1Sound.Play(); }
-            if (playerRect.Intersects(coin1Rect_7) && coin1IsActive_7) { coin1IsActive_7 = false; money++; Coin1Sound.Play(); }
-            if (playerRect.Intersects(coin1Rect_8) && coin1IsActive_8) { coin1IsActive_8 = false; money++; Coin1Sound.Play(); }
-            if (playerRect.Intersects(coin1Rect_9) && coin1IsActive_9) { coin1IsActive_9 = false; money++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_0) && coin1IsActive_0) { coin1IsActive_0 = false; sesionMoney++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_1) && coin1IsActive_1) { coin1IsActive_1 = false; sesionMoney++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_2) && coin1IsActive_2) { coin1IsActive_2 = false; sesionMoney++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_3) && coin1IsActive_3) { coin1IsActive_3 = false; sesionMoney++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_4) && coin1IsActive_4) { coin1IsActive_4 = false; sesionMoney++; Coin1Sound.Play(); }
+            if (playerRect.Intersects(coin1Rect_5) && coin1IsActive_5) { coin1IsActive_5 = false; sesionMoney++; Coin1Sound.Play(); }
         }
 
         protected override void Update(GameTime gameTime)
@@ -288,9 +290,12 @@ namespace Missile_Master
             GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboard = Keyboard.GetState();
 
+            string timeStamp = "[" + Math.Round(gameTime.TotalGameTime.TotalMilliseconds, 0).ToString() + "] ";
+
             #region to main menu
             if (Keyboard.GetState().IsKeyDown(Keys.Escape) || Keyboard.GetState().IsKeyDown(Keys.Back)) //esc or back to return to Mainmenu
             {
+                firstRun = true;
                 gameState = GameStates.MainMenu;
             }
             #endregion
@@ -311,6 +316,7 @@ namespace Missile_Master
 
             #region Strings
             moneyStr = "Money : " + money.ToString();
+            sesionMoneyStr = "Money : " + sesionMoney.ToString();
             fuelStr = "Fuel : " + Math.Round(fuel, 0).ToString();
             #endregion
 
@@ -318,14 +324,26 @@ namespace Missile_Master
             {
                 #region Mainmenu
                 case GameStates.MainMenu:
-
-                    selectionIndex = 5; //number of menu options
-
-                     #region Menu Controls
-                    if (Keyboard.GetState().IsKeyUp(Keys.S) && Keyboard.GetState().IsKeyUp(Keys.Down) && Keyboard.GetState().IsKeyUp(Keys.W) && Keyboard.GetState().IsKeyUp(Keys.Up)) { KeyIsUp = true; } // detect if key is up
+                    if (firstRun)
+                    {
+                        selected = 0;
+                        selectionIndex = 5;
+                        firstRun = false;
+                    }
+                    #region Menu Controls 
+                    // detect if key is up
+                    if (
+                        Keyboard.GetState().IsKeyUp(Keys.S) && 
+                        Keyboard.GetState().IsKeyUp(Keys.Down) && 
+                        Keyboard.GetState().IsKeyUp(Keys.W) && 
+                        Keyboard.GetState().IsKeyUp(Keys.Up) && 
+                        Keyboard.GetState().IsKeyUp(Keys.Enter)
+                        )
+                    { KeyIsUp = true; } 
+                    // detect if key is down
                     if (KeyIsUp)
                     {
-                        if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) //detect if key is down
+                        if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) 
                         {
                             KeyIsUp = false;
                             if (selected < selectionIndex) { selected++; }
@@ -336,26 +354,39 @@ namespace Missile_Master
                             KeyIsUp = false;
                             if (selected > 0) { selected--; }
                         }
-                    }
 
-
-                    if (Keyboard.GetState().IsKeyDown(Keys.Enter)) // menu options
-                    {
-                        switch (selected) {
-                            case 0: gameState = GameStates.Campaign;
-                                break;
-                            case 1: gameState = GameStates.LevelSelect;
-                                break;
-                            case 2: gameState = GameStates.Shop;
-                                break;
-                            case 3: gameState = GameStates.Options;
-                                break;
-                            case 4: gameState = GameStates.Credits;
-                                break;
-                            case 5: gameState = GameStates.Exit;
-                                break;
-                            default:
-                                throw new InvalidOperationException("Unexpected value for 'selected' = " + selected);
+                        // menu options
+                        if (Keyboard.GetState().IsKeyDown(Keys.Enter)) 
+                        {
+                            KeyIsUp = false;
+                            switch (selected) {
+                                case 0:
+                                    firstRun = true;
+                                    gameState = GameStates.Campaign;
+                                    break;
+                                case 1:
+                                    firstRun = true;
+                                    gameState = GameStates.LevelSelect;
+                                    break;
+                                case 2:
+                                    firstRun = true;
+                                    gameState = GameStates.Shop;
+                                    break;
+                                case 3:
+                                    firstRun = true;
+                                    gameState = GameStates.Options;
+                                    break;
+                                case 4:
+                                    firstRun = true;
+                                    gameState = GameStates.Credits;
+                                    break;
+                                case 5:
+                                    firstRun = true;
+                                    gameState = GameStates.Exit;
+                                    break;
+                                default:
+                                    throw new InvalidOperationException("Unexpected value for 'selected' = " + selected);
+                            }
                         }
                     }
                     #endregion
@@ -363,11 +394,6 @@ namespace Missile_Master
                     if (Keyboard.GetState().IsKeyDown(Keys.C)) //C to enter Credits
                     {
                         gameState = GameStates.Credits;
-                    }
-
-                    if (Keyboard.GetState().IsKeyDown(Keys.O)) //numpad1 to enter Level1
-                    {
-                        gameState = GameStates.Level1;
                     }
 
                     break;
@@ -379,6 +405,7 @@ namespace Missile_Master
 
                     if (Keyboard.GetState().IsKeyDown(Keys.Insert)) //insert goes to activatecheats screen
                     {
+                        firstRun = true;
                         gameState = GameStates.Cheats;
                     }
                     break;
@@ -410,21 +437,27 @@ namespace Missile_Master
                         switch (selected)
                         {
                             case 0:
+                                firstRun = true;
                                 gameState = GameStates.Campaign;
                                 break;
                             case 1:
+                                firstRun = true;
                                 gameState = GameStates.LevelSelect;
                                 break;
                             case 2:
+                                firstRun = true;
                                 gameState = GameStates.Shop;
                                 break;
                             case 3:
+                                firstRun = true;
                                 gameState = GameStates.Options;
                                 break;
                             case 4:
+                                firstRun = true;
                                 gameState = GameStates.Credits;
                                 break;
                             case 5:
+                                firstRun = true;
                                 gameState = GameStates.Exit;
                                 break;
                             default:
@@ -450,7 +483,12 @@ namespace Missile_Master
 
                 #region Options
                 case GameStates.Options:
-
+                    if (firstRun)
+                    {
+                        selected = 0;
+                        selectionIndex = 2;
+                        firstRun = false;
+                    }
 
                     break;
                 #endregion
@@ -481,21 +519,27 @@ namespace Missile_Master
                         switch (selected)
                         {
                             case 0:
+                                firstRun = true;
                                 gameState = GameStates.Campaign;
                                 break;
                             case 1:
+                                firstRun = true;
                                 gameState = GameStates.LevelSelect;
                                 break;
                             case 2:
+                                firstRun = true;
                                 gameState = GameStates.Shop;
                                 break;
                             case 3:
+                                firstRun = true;
                                 gameState = GameStates.Options;
                                 break;
                             case 4:
+                                firstRun = true;
                                 gameState = GameStates.Credits;
                                 break;
                             case 5:
+                                firstRun = true;
                                 gameState = GameStates.Exit;
                                 break;
                             default:
@@ -504,7 +548,12 @@ namespace Missile_Master
                     }
                     #endregion
 
-
+                    if (firstRun)
+                    {
+                        selected = 0;
+                        selectionIndex = 2;
+                        firstRun = false;
+                    }
                     break;
                 #endregion
 
@@ -523,6 +572,9 @@ namespace Missile_Master
                                Building1.Height
                            );
 
+                            selectionIndex = 5; // Number of menu options
+                            selected = 0; // Reset selected
+
                             coin1Rect_0 = new Rectangle(40, (int)windowMaxY - 240, coin1Size, coin1Size);
                             coin1Rect_1 = new Rectangle(40, 240, coin1Size, coin1Size);
                             coin1Rect_2 = new Rectangle(240, 240, coin1Size, coin1Size);
@@ -538,7 +590,6 @@ namespace Missile_Master
                             ResetGame();
                             firstRun = false;
                         }
-
                         // Collision with the ground
                         if (playerPos.Y > windowMaxY - 16)
                         {
@@ -645,19 +696,36 @@ namespace Missile_Master
 
                 #region Shop
                 case GameStates.Shop:
+                    if (firstRun)
+                    {
+                        selected = 0;
+                        selectionIndex = 2;
+                        firstRun = false;
+                    }
 
 
-                    
                     break;
                 #endregion
 
                 #region Campaign
                 case GameStates.Campaign:
-
-                    selectionIndex = 2; //number of menu options
-
+                    if (firstRun)
+                    {
+                        selected = 0;
+                        selectionIndex = 2;
+                        firstRun = false;
+                    }
                     #region Menu Controls
-                    if (Keyboard.GetState().IsKeyUp(Keys.S) && Keyboard.GetState().IsKeyUp(Keys.Down) && Keyboard.GetState().IsKeyUp(Keys.W) && Keyboard.GetState().IsKeyUp(Keys.Up)) { KeyIsUp = true; } // detect if key is up
+                    // detect if key is up
+                    if (
+                        Keyboard.GetState().IsKeyUp(Keys.S) &&
+                        Keyboard.GetState().IsKeyUp(Keys.Down) &&
+                        Keyboard.GetState().IsKeyUp(Keys.W) &&
+                        Keyboard.GetState().IsKeyUp(Keys.Up) &&
+                        Keyboard.GetState().IsKeyUp(Keys.Enter)
+                        )
+                    { KeyIsUp = true; }
+
                     if (KeyIsUp)
                     {
                         if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down)) //detect if key is down
@@ -671,6 +739,27 @@ namespace Missile_Master
                             KeyIsUp = false;
                             if (selected > 0) { selected--; }
                         }
+
+                        if (Keyboard.GetState().IsKeyDown(Keys.Enter)) // menu options
+                        {
+                            switch (selected) // TODO : Fix savegames and pop-up window for conformation for replacing old savegame
+                            {
+                                case 0: // Continue
+                                    firstRun = true;
+                                    gameState = GameStates.Level1;
+                                    break;
+                                case 1: // New
+                                    firstRun = true;
+                                    gameState = GameStates.Level1;
+                                    break;
+                                case 2: // Back
+                                    firstRun = true;
+                                    gameState = GameStates.MainMenu;
+                                    break;
+                                default:
+                                    throw new InvalidOperationException("Unexpected value for 'selected' = " + selected);
+                            }
+                        }
                     }
                     #endregion
                     break;
@@ -678,7 +767,6 @@ namespace Missile_Master
 
                 #region Gameover
                 case GameStates.Gameover:
-                    firstRun = true;
 
                     break;
                 #endregion
@@ -891,7 +979,7 @@ namespace Missile_Master
                     spriteBatch.DrawString // Money
                         (
                         RobotoRegular36,
-                        moneyStr,
+                        sesionMoneyStr,
                         new Vector2(0, 0),
                         Color.White
                         );
@@ -1003,7 +1091,7 @@ namespace Missile_Master
 
                     // New
                     Vector2 newOrigin = RobotoRegular36.MeasureString(campaingStrArr[0]) / 2;
-                    Vector2 newPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 25);
+                    Vector2 newPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 30);
                     if (selected == 0)
                     {
                         spriteBatch.DrawString(RobotoBold36, campaingStrArr[0], newPos, Color.White,
@@ -1017,7 +1105,7 @@ namespace Missile_Master
 
                     // Continue
                     Vector2 continueOrigin = RobotoRegular36.MeasureString(campaingStrArr[1]) / 2;
-                    Vector2 continuePos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 50);
+                    Vector2 continuePos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 40);
                     if (selected == 1)
                     {
                         spriteBatch.DrawString(RobotoBold36, campaingStrArr[1], continuePos, Color.White,
@@ -1031,7 +1119,7 @@ namespace Missile_Master
 
                     // Back
                     Vector2 backOrigin = RobotoRegular36.MeasureString(campaingStrArr[2]) / 2;
-                    Vector2 backPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 75);
+                    Vector2 backPos = new Vector2(graphics.GraphicsDevice.Viewport.Width / 2, graphics.GraphicsDevice.Viewport.Height / 100 * 70);
                     if (selected == 2)
                     {
                         spriteBatch.DrawString(RobotoBold36, campaingStrArr[2], backPos, Color.White,
