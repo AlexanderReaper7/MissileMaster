@@ -930,10 +930,12 @@ namespace Missile_Master
                         switch(currentLevel)
                         {
                             case 1:
-                                gameState = GameStates.Level1;
+                                firstRun = true;
+                                gameState = GameStates.Level2;
                                 break;
 
                             case 2:
+                                firstRun = true;
                                 gameState = GameStates.Level2;
                                 break;
                             default:
