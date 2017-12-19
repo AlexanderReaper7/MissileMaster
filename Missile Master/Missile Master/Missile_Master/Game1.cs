@@ -936,7 +936,7 @@ namespace Missile_Master
 
                             case 2:
                                 firstRun = true;
-                                gameState = GameStates.Level2;
+                                gameState = GameStates.Level2; // Implement more levels
                                 break;
                             default:
                                 throw new InvalidOperationException("Unexpected value for currentLevel = " + currentLevel);
@@ -974,10 +974,6 @@ namespace Missile_Master
                     throw new InvalidOperationException("Unexpected value for gamestate = " + gameState);
                     #endregion
             }
-
-
-
-
 
             base.Update(gameTime);
         }
