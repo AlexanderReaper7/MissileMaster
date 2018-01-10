@@ -113,13 +113,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Text\Credits.xml">
-      <Name>Credits</Name>
-      <Importer>XmlImporter</Importer>
-      <Processor>PassThroughProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Sounds\Explosion1.wav">
       <Name>Explosion1</Name>
       <Importer>WavImporter</Importer>
@@ -153,6 +146,9 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Text\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />
   <!--  To modify your build process, add your task inside one of the targets below and uncomment it. 
