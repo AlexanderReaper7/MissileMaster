@@ -20,8 +20,8 @@ namespace Missile_Master
         Texture2D PlayerTex;
         float playerAccel;
         float playerAngle;
-        float playerMaxSpeed = 10;
-        float playerTurnRate = 0.04f;
+        readonly float playerMaxSpeed = 10;
+        readonly float playerTurnRate = 0.04f;
         Vector2 playerOrigin;
         Vector2 playerPos;
         Vector2 playerDirection;
@@ -276,12 +276,10 @@ namespace Missile_Master
             if (explosion1Rect.Intersects(building1Rect))
             {
                 won = true;
-                Console.WriteLine("Won");
                 money += sesionMoney;
             }
             else
             {
-                Console.WriteLine("Lost");
                 won = false;
             }
             Explosion1Sound.Play();
@@ -306,8 +304,6 @@ namespace Missile_Master
 
             GamePadState gamepad = GamePad.GetState(PlayerIndex.One);
             KeyboardState keyboard = Keyboard.GetState();
-
-            string timeStamp = "[" + Math.Round(gameTime.TotalGameTime.TotalMilliseconds, 0).ToString() + "] ";
 
             #region to main menu
             // Esc or back to return to Mainmenu
